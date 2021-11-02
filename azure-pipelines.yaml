@@ -14,6 +14,9 @@ stages:
         knownHostsEntry: 'KNOWN_HOSTS_STRING'
         sshPublicKey: '$(public_key)'
         sshKeySecureFile: 'id_rsa'
+    - task: TerraformInstaller@0
+      inputs:
+        terraformVersion: '0.12.3'
     - task: JMeterInstaller@0
       inputs:
         jmeterVersion: '5.4.1'
