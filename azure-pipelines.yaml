@@ -12,7 +12,7 @@ stages:
     - task: InstallSSHKey@0
       inputs:
         knownHostsEntry: 'KNOWN_HOSTS_STRING'
-        sshPublicKey: 'id_rsa.pub'
+        sshPublicKey: '$(PUBLIC_KEY)'
         sshKeySecureFile: 'id_rsa'
     - task: TerraformInstaller@0
       inputs:
