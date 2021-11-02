@@ -1,0 +1,292 @@
+{
+	"info": {
+		"_postman_id": "80eb58fc-6140-4de5-8814-cdc2ea5d09c4",
+		"name": "Data Validation Test Suite",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Employee Record",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful response\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"success\");",
+							"});",
+							"var json = pm.response.json();",
+							"pm.environment.set(\"id\", json.data.id);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"// reference source https://sqa.stackexchange.com/questions/37963/how-to-verify-response-body-as-a-test-in-postman",
+							"pm.test(\"Validate create employee record Data\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.name).to.eql(pm.variables.get(\"name\"));",
+							"    pm.expect(jsonData.data.age).to.eql(pm.variables.get(\"age\"));",
+							"    pm.expect(jsonData.data.salary).to.eql(pm.variables.get(\"salary\"));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"{{name}}\",\n    \"salary\": \"{{salary}}\",\n    \"age\": \"{{age}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{azureappurl}}/api/{{version}}/create",
+					"host": [
+						"{{azureappurl}}"
+					],
+					"path": [
+						"api",
+						"{{version}}",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Employees Data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful response\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"success\");",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"// reference source https://www.softwaretestinghelp.com/postman-assertions-automating-response-validation/",
+							"var schema = {",
+							"    \"type\": \"object\",",
+							"    \"properties\": {",
+							"        \"status\"  : { \"type\": \"string\" },",
+							"        \"data\"    : { \"type\": \"array\" }",
+							"    }",
+							"};",
+							"",
+							"pm.test('Validate get all employees data schema', function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{azureappurl}}/api/{{version}}/employees",
+					"host": [
+						"{{azureappurl}}"
+					],
+					"path": [
+						"api",
+						"{{version}}",
+						"employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Employee Data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful response\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"success\");",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"// reference source https://www.softwaretestinghelp.com/postman-assertions-automating-response-validation/",
+							"var schema = {",
+							"    \"type\": \"object\",",
+							"    \"properties\": {",
+							"        \"status\"  : { \"type\": \"string\" },",
+							"        \"data\"    : { \"type\": \"object\",",
+							"                      \"properties\": {",
+							"                          \"name\": { \"type\": \"string\" },",
+							"                          \"salary\": { \"type\": \"string\" },",
+							"                          \"age\": { \"type\": \"string\" }",
+							"                      }",
+							"                    }",
+							"    }",
+							"};",
+							"",
+							"pm.test('Validate get employee data schema', function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{azureappurl}}/api/{{version}}/employee/{{id}}",
+					"host": [
+						"{{azureappurl}}"
+					],
+					"path": [
+						"api",
+						"{{version}}",
+						"employee",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Employee Data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful response\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"success\");",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"// reference source https://www.softwaretestinghelp.com/postman-assertions-automating-response-validation/",
+							"var schema = {",
+							"    \"type\": \"object\",",
+							"    \"properties\": {",
+							"        \"status\"  : { \"type\": \"string\" },",
+							"        \"data\"    : { \"type\": \"object\",",
+							"                      \"properties\": {",
+							"                          \"name\": { \"type\": \"string\" },",
+							"                          \"salary\": { \"type\": \"string\" },",
+							"                          \"age\": { \"type\": \"string\" }",
+							"                      }",
+							"                    },",
+							"\t\t\"message\" : { \"type\": \"string\" }",
+							"    }",
+							"};",
+							"",
+							"pm.test('Validate update employee data schema', function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+							"    pm.expect(jsonData.message).to.eql(\"Record has been successfully updated\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"{{name}}\",\n    \"salary\": \"{{salary}}\",\n    \"age\": \"{{age}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{azureappurl}}/api/{{version}}/update/{{id}}",
+					"host": [
+						"{{azureappurl}}"
+					],
+					"path": [
+						"api",
+						"{{version}}",
+						"update",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Employee Record",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful response\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"success\");",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"// reference source https://www.softwaretestinghelp.com/postman-assertions-automating-response-validation/",
+							"var schema = {",
+							"    \"type\": \"object\",",
+							"    \"properties\": {",
+							"        \"status\"  : { \"type\": \"string\" },",
+							"        \"data\"    : { \"type\": \"string\" },",
+							"\t\t\"message\" : { \"type\": \"string\" }",
+							"    }",
+							"};",
+							"",
+							"pm.test(\"Validate delete employee record schema\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+							"    pm.expect(jsonData.message).to.eql(\"Record has been successfully deleted\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{azureappurl}}/api/{{version}}/delete/{{id}}",
+					"host": [
+						"{{azureappurl}}"
+					],
+					"path": [
+						"api",
+						"{{version}}",
+						"delete",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

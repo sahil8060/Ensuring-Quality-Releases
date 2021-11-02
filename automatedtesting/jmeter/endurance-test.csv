@@ -1,0 +1,9 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1635842458960,17294,GET Books,200,OK,Endurance Test 1-2,text,true,,907298,178,2,2,https://mynewwebapp-appservice.azurewebsites.net/api/Books,6778,0,1738
+1635842458544,17709,GET Books,200,OK,Endurance Test 1-1,text,true,,907883,178,2,2,https://mynewwebapp-appservice.azurewebsites.net/api/Books,7255,0,2154
+1635842476255,367,Post Books,200,OK,Endurance Test 1-1,text,true,,262,262,2,2,https://mynewwebapp-appservice.azurewebsites.net/api/Books,367,0,0
+1635842476255,370,Post Books,200,OK,Endurance Test 1-2,text,true,,262,262,2,2,https://mynewwebapp-appservice.azurewebsites.net/api/Books,370,0,0
+1635842476623,752,Get Book,200,OK,Endurance Test 1-1,text,true,,4743,184,2,2,https://mynewwebapp-appservice.azurewebsites.net/api/Books/?id=1,751,0,0
+1635842476626,749,Get Book,200,OK,Endurance Test 1-2,text,true,,4789,184,2,2,https://mynewwebapp-appservice.azurewebsites.net/api/Books/?id=2,749,0,0
+1635842477376,361,Delete Book,200,OK,Endurance Test 1-2,,true,,211,274,2,2,https://mynewwebapp-appservice.azurewebsites.net/api/Books/?id=2,361,0,0
+1635842477376,410,Delete Book,200,OK,Endurance Test 1-1,,true,,211,274,1,1,https://mynewwebapp-appservice.azurewebsites.net/api/Books/?id=1,410,0,0
