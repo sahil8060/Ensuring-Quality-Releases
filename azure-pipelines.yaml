@@ -8,15 +8,18 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
+    
     # Needed for Terraform VM deployment
     - task: InstallSSHKey@0
       inputs:
         knownHostsEntry: 'KNOWN_HOSTS_STRING'
         sshPublicKey: '$(PUBLIC_KEY)'
         sshKeySecureFile: 'id_rsa'
+    
     - task: TerraformInstaller@0
       inputs:
         terraformVersion: '0.12.3'
+    
     - task: DownloadSecureFile@1
       displayName: 'Terraform tfvars files'
       inputs:
@@ -26,6 +29,7 @@ stages:
       inputs:
         targetType: 'inline'
         script: 'cp $(Agent.TempDirectory)/terraform.tfvars $(System.DefaultWorkingDirectory)/terraform/environments/test'
+    
     - task: TerraformTaskV2@2
       displayName: 'Terraform Init'
       inputs:
@@ -46,16 +50,18 @@ stages:
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
         environmentServiceNameAzureRM: 'azurerm-sc'
     
-    - task: TerraformTaskV2@2
-      displayName: 'Terraform Destroy'
-      inputs:
-        provider: 'azurerm'
-        command: 'destroy'
-        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
-        environmentServiceNameAzureRM: 'azurerm-sc'
+    #- task: TerraformTaskV2@2
+    #  displayName: 'Terraform Destroy'
+    #  inputs:
+    #    provider: 'azurerm'
+    #    command: 'destroy'
+    #    workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
+    #    environmentServiceNameAzureRM: 'azurerm-sc'
+    
     #- task: JMeterInstaller@0
     #  inputs:
     #    jmeterVersion: '5.4.1'
+    
     #- task: ArchiveFiles@2
     #  displayName: 'Archive FakeRestAPI'
     #  inputs:
@@ -66,6 +72,7 @@ stages:
     #- publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
     #  displayName: 'Upload Package'
     #  artifact: drop-fakerestapi
+
 #- stage:
 #  jobs:
 #  - deployment: FakeRestAPI
