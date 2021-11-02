@@ -82,6 +82,7 @@ stages:
         jmeterVersion: '5.4.1'
     
     - task: Bash@3
+      displayName: 'Stress Test'
       inputs:
         targetType: 'inline'
         script: |
@@ -91,7 +92,7 @@ stages:
                                      -j log/jmeter/jmeter.log
     
     - task: ArchiveFiles@2
-      displayName: 'Stress Test'
+      displayName: 'Archive Stress Test'
       inputs:
         rootFolderOrFile: '$(System.DefaultWorkingDirectory)/log/jmeter/Stress-Test-Report'
         includeRootFolder: false
@@ -99,9 +100,10 @@ stages:
         archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Stress-Test-Report.zip'
     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Stress-Test-Report.zip
       displayName: 'Upload Stress Test Jmeter Logs'
-      artifact: drop-fakerestapi
+      artifact: drop-stressTestJmeterLogs
     
     - task: Bash@3
+      displayName: 'Endurance Test'
       inputs:
         targetType: 'inline'
         script: |
@@ -111,7 +113,7 @@ stages:
                                      -j log/jmeter/jmeter.log
     
     - task: ArchiveFiles@2
-      displayName: 'Endurance Test'
+      displayName: 'Archive Endurance Test'
       inputs:
         rootFolderOrFile: '$(System.DefaultWorkingDirectory)/log/jmeter/Endurance-Test-Report'
         includeRootFolder: false
@@ -119,7 +121,7 @@ stages:
         archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Endurance-Test-Report.zip'
     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Endurance-Test-Report.zip
       displayName: 'Upload Endurance Test Jmeter Logs'
-      artifact: drop-fakerestapi
+      artifact: drop-enduranceTestJmeterLogs
 
 - stage:
   jobs:
