@@ -85,7 +85,7 @@ stages:
       inputs:
         targetType: 'inline'
         script: |
-          apache-jmeter-5.4.1/bin/jmeter -n -t automatedtesting/jmeter/"Stress Test.jmx" \
+          $(jmeter_path) -n -t automatedtesting/jmeter/"Stress Test.jmx" \
                                      -l log/jmeter/stress-test.csv \
                                      -e -f -o log/jmeter/"Stress Test Report" \
                                      -j log/jmeter/jmeter.log
@@ -105,7 +105,7 @@ stages:
       inputs:
         targetType: 'inline'
         script: |
-          apache-jmeter-5.4.1/bin/jmeter -n -t automatedtesting/jmeter/"Endurance Test.jmx" \
+          $(jmeter_path) -n -t automatedtesting/jmeter/"Endurance Test.jmx" \
                                      -l log/jmeter/endurance-test.csv \
                                      -e -f -o log/jmeter/"Endurance Test Report" \
                                      -j log/jmeter/jmeter.log
