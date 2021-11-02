@@ -17,6 +17,25 @@ stages:
     - task: TerraformInstaller@0
       inputs:
         terraformVersion: '0.12.3'
+    
+    #- task: TerraformTaskV2@2
+    #  inputs:
+    #    provider: 'azurerm'
+    #    command: 'init'
+    #    workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
+    #    backendServiceArm: 'azurerm-sc'
+    #    backendAzureRmResourceGroupName: 'tfstate'
+    #    backendAzureRmStorageAccountName: 'tfstate23401'
+    #    backendAzureRmContainerName: 'tfstate'
+    #    backendAzureRmKey: '$(access_key)'
+    
+    #- task: TerraformTaskV2@2
+    #  inputs:
+    #    provider: 'azurerm'
+    #    command: 'apply'
+    #    workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
+    #    environmentServiceNameAzureRM: 'azurerm-sc'
+    
     - task: JMeterInstaller@0
       inputs:
         jmeterVersion: '5.4.1'
