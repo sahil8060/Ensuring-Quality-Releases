@@ -17,7 +17,16 @@ stages:
     - task: TerraformInstaller@0
       inputs:
         terraformVersion: '0.12.3'
-    
+    - task: DownloadSecureFile@1
+      displayName: 'Terraform tfvars files'
+      inputs:
+        secureFile: 'terraform.tfvars'
+        socketTimeout: '60'
+        
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: 'cp $(Agent.TempDirectory)/terraform.tfvars $(System.DefaultWorkingDirectory)/terraform/environments/test'
     - task: TerraformTaskV2@2
       displayName: 'Terraform Init'
       inputs:
