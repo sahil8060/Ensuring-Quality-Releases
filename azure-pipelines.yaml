@@ -21,7 +21,6 @@ stages:
       displayName: 'Terraform tfvars files'
       inputs:
         secureFile: 'terraform.tfvars'
-        socketTimeout: '60'
         
     - task: Bash@3
       inputs:
