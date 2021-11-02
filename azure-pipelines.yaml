@@ -36,6 +36,11 @@ stages:
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
         environmentServiceNameAzureRM: 'azurerm-sc'
     
+    - task: TerraformTaskV2@2
+      inputs:
+        provider: 'azurerm'
+        command: 'destroy'
+        environmentServiceNameAzureRM: 'azurerm-sc'
     #- task: JMeterInstaller@0
     #  inputs:
     #    jmeterVersion: '5.4.1'
