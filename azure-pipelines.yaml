@@ -65,10 +65,6 @@ stages:
     #    workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
     #    environmentServiceNameAzureRM: 'azurerm-sc'
     
-    - task: JMeterInstaller@0
-      inputs:
-        jmeterVersion: '5.4.1'
-    
     - task: ArchiveFiles@2
       displayName: 'Archive FakeRestAPI'
       inputs:
@@ -78,6 +74,51 @@ stages:
         archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
       displayName: 'Upload Package'
+      artifact: drop-fakerestapi
+    
+    # JMeter Installer
+    - task: JMeterInstaller@0
+      inputs:
+        jmeterVersion: '5.4.1'
+    
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          apache-jmeter-5.4.1/bin/jmeter -n -t automatedtesting/jmeter/"Stress Test.jmx" \
+                                     -l log/jmeter/stress-test.csv \
+                                     -e -f -o log/jmeter/"Stress Test Report" \
+                                     -j log/jmeter/jmeter.log
+    
+    - task: ArchiveFiles@2
+      displayName: 'Stress Test'
+      inputs:
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/log/jmeter/"Stress Test Report"'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-"Stress Test Report.zip"'
+    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-"Stress Test Report.zip"
+      displayName: 'Upload Stress Test Jmeter Logs'
+      artifact: drop-fakerestapi
+    
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          apache-jmeter-5.4.1/bin/jmeter -n -t automatedtesting/jmeter/"Endurance Test.jmx" \
+                                     -l log/jmeter/endurance-test.csv \
+                                     -e -f -o log/jmeter/"Endurance Test Report" \
+                                     -j log/jmeter/jmeter.log
+    
+    - task: ArchiveFiles@2
+      displayName: 'Endurance Test'
+      inputs:
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/log/jmeter/"Endurance Test Report"'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-"Endurance Test Report.zip"'
+    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-"Endurance Test Report.zip"
+      displayName: 'Upload Endurance Test Jmeter Logs'
       artifact: drop-fakerestapi
 
 - stage:
