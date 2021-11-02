@@ -87,7 +87,7 @@ stages:
         script: |
           $(jmeter_path) -n -t automatedtesting/jmeter/"Stress Test.jmx" \
                                      -l log/jmeter/stress-test.csv \
-                                     -e -f -o log/jmeter/Stress-Test-Report" \
+                                     -e -f -o log/jmeter/Stress-Test-Report \
                                      -j log/jmeter/jmeter.log
     
     - task: ArchiveFiles@2
