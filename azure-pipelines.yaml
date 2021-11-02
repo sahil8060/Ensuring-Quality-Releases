@@ -14,6 +14,9 @@ stages:
         knownHostsEntry: 'KNOWN_HOSTS_STRING'
         sshPublicKey: '$(public_key)'
         sshKeySecureFile: 'id_rsa'
+    - task: JMeterInstaller@0
+      inputs:
+        jmeterVersion: '5.4.1'
     - task: ArchiveFiles@2
       displayName: 'Archive FakeRestAPI'
       inputs:
