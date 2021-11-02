@@ -18,75 +18,74 @@ stages:
       inputs:
         terraformVersion: '0.12.3'
     
-    #- task: TerraformTaskV2@2
-    #  inputs:
-    #    provider: 'azurerm'
-    #    command: 'init'
-    #    workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
-    #    backendServiceArm: 'azurerm-sc'
-    #    backendAzureRmResourceGroupName: 'tfstate'
-    #    backendAzureRmStorageAccountName: 'tfstate23401'
-    #    backendAzureRmContainerName: 'tfstate'
-    #    backendAzureRmKey: '$(access_key)'
-    
-    #- task: TerraformTaskV2@2
-    #  inputs:
-    #    provider: 'azurerm'
-    #    command: 'apply'
-    #    workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
-    #    environmentServiceNameAzureRM: 'azurerm-sc'
-    
-    - task: JMeterInstaller@0
+    - task: TerraformTaskV2@2
       inputs:
-        jmeterVersion: '5.4.1'
-    - task: ArchiveFiles@2
-      displayName: 'Archive FakeRestAPI'
+        provider: 'azurerm'
+        command: 'init'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
+        backendServiceArm: 'azurerm-sc'
+        backendAzureRmResourceGroupName: 'tfstate'
+        backendAzureRmStorageAccountName: 'tfstate23401'
+        backendAzureRmContainerName: 'tfstate'
+        backendAzureRmKey: '$(access_key)'
+    
+    - task: TerraformTaskV2@2
       inputs:
-        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/fakerestapi'
-        includeRootFolder: false
-        archiveType: 'zip'
-        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
-    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
-      displayName: 'Upload Package'
-      artifact: drop-fakerestapi
-- stage:
-  jobs:
-  - deployment: FakeRestAPI
-    pool:
-      vmImage: 'ubuntu-latest'
-    environment: 'TEST'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: AzureWebApp@1
-            displayName: 'Deploy Azure Web App'
-            inputs:
-              azureSubscription: 'azurerm-sc'
-              appName: 'mynewwebapp-AppService'
-              appType: webApp
-              package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
-  - deployment: VMDeploy
-    displayName: VirtualMachine Deploy
-    environment:
-      name:  'TEST'
-      resourceType: VirtualMachine
-      tags: TAG NAME
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: Bash@3
-            inputs:
-              targetType: 'inline'
-              script: |
-                #! /bin/bash
-                
-                sudo apt-get upgrade -y
-                sudo apt-get install python3-pip -y
-                sudo apt-get install unzip -y
-                sudo apt-get install -y chromium-browser
-                pip3 install selenium
-                export PATH=$PATH:some/path
+        provider: 'azurerm'
+        command: 'apply'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
+        environmentServiceNameAzureRM: 'azurerm-sc'
+    
+    #- task: JMeterInstaller@0
+    #  inputs:
+    #    jmeterVersion: '5.4.1'
+    #- task: ArchiveFiles@2
+    #  displayName: 'Archive FakeRestAPI'
+    #  inputs:
+    #    rootFolderOrFile: '$(System.DefaultWorkingDirectory)/fakerestapi'
+    #    includeRootFolder: false
+    #    archiveType: 'zip'
+    #    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
+    #- publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
+    #  displayName: 'Upload Package'
+    #  artifact: drop-fakerestapi
+#- stage:
+#  jobs:
+#  - deployment: FakeRestAPI
+#   pool:
+#      vmImage: 'ubuntu-latest'
+#    environment: 'TEST'
+#   strategy:
+#      runOnce:
+#       deploy:
+#          steps:
+#         - task: AzureWebApp@1
+#            displayName: 'Deploy Azure Web App'
+#            inputs:
+#              azureSubscription: 'azurerm-sc'
+#              appName: 'mynewwebapp-AppService'
+#              appType: webApp
+#              package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
+#  - deployment: VMDeploy
+#    displayName: VirtualMachine Deploy
+#   environment:
+#      name:  'TEST'
+#      resourceType: VirtualMachine
+#     tags: TAG NAME
+#   strategy:
+#        deploy:
+#          steps:
+#          - task: Bash@3
+#            inputs:
+#              targetType: 'inline'
+#              script: |
+#                #! /bin/bash
+#                
+#                sudo apt-get upgrade -y
+#                sudo apt-get install python3-pip -y
+#                sudo apt-get install unzip -y
+#                sudo apt-get install -y chromium-browser
+#                pip3 install selenium
+#                export PATH=$PATH:some/path
 
 
