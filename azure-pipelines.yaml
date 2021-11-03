@@ -81,6 +81,94 @@ stages:
     #  inputs:
     #    jmeterVersion: '5.4.1'
 
+
+    #- task: Bash@3
+    #  displayName: 'Stress Test'
+    #  inputs:
+    #    targetType: 'inline'
+    #    script: |
+    #      $(jmeter_path) -n -t automatedtesting/jmeter/"Stress Test.jmx" \
+    #                                 -l log/jmeter/stress-test.csv \
+    #                                 -e -f -o log/jmeter/Stress-Test-Report \
+    #                                 -j log/jmeter/jmeter.log
+    
+    #- task: ArchiveFiles@2
+    #  displayName: 'Archive Stress Test'
+    #  inputs:
+    #    rootFolderOrFile: '$(System.DefaultWorkingDirectory)/log/jmeter/Stress-Test-Report'
+    #    includeRootFolder: false
+    #    archiveType: 'zip'
+    #    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Stress-Test-Report.zip'
+    #- publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Stress-Test-Report.zip
+    #  displayName: 'Upload Stress Test Jmeter Logs'
+    #  artifact: drop-stressTestJmeterLogs
+    
+    #- task: Bash@3
+    #  displayName: 'Endurance Test'
+    #  inputs:
+    #    targetType: 'inline'
+    #    script: |
+    #      $(jmeter_path) -n -t automatedtesting/jmeter/"Endurance Test.jmx" \
+    #                                 -l log/jmeter/endurance-test.csv \
+    #                                 -e -f -o log/jmeter/Endurance-Test-Report \
+    #                                 -j log/jmeter/jmeter.log
+    
+    #- task: ArchiveFiles@2
+    #  displayName: 'Archive Endurance Test'
+    #  inputs:
+    #    rootFolderOrFile: '$(System.DefaultWorkingDirectory)/log/jmeter/Endurance-Test-Report'
+    #    includeRootFolder: false
+    #    archiveType: 'zip'
+    #    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Endurance-Test-Report.zip'
+    #- publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Endurance-Test-Report.zip
+    #  displayName: 'Upload Endurance Test Jmeter Logs'
+    #  artifact: drop-enduranceTestJmeterLogs
+
+- stage:
+  jobs:
+  - deployment: FakeRestAPI
+    pool:
+      vmImage: 'ubuntu-latest'
+    environment: 'TEST'
+    strategy:
+      runOnce:
+       deploy:
+          steps:
+          - task: AzureWebApp@1
+            displayName: 'Deploy Azure Web App'
+            inputs:
+              azureSubscription: 'azurerm-sc'
+              appName: 'mynewwebapp-AppService'
+              appType: webApp
+              package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
+  - deployment: VMDeploy
+    displayName: VirtualMachine Deploy
+    environment:
+      name:  'TEST'
+      resourceType: VirtualMachine
+      tags: TAG NAME
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: Bash@3
+            inputs:
+              targetType: 'inline'
+              script: |
+                #! /bin/bash
+                
+                sudo apt-get upgrade -y
+                sudo apt-get install python3-pip -y
+                sudo apt-get install unzip -y
+                sudo apt-get install -y chromium-browser
+                pip3 install selenium
+                export PATH=$PATH:some/path
+
+  - job: Postman
+    displayName: 'Postman Tests'
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
     #- task: NewmanPostman@4
     #  displayName: 'Regression Test Suite'
     #  inputs:
@@ -170,87 +258,5 @@ stages:
     #- publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Data-Validation-Test-Suite.zip
     #  displayName: 'Upload Data Validation Test Suite'
     #  artifact: drop-dataValidationTestSuite
-
-    #- task: Bash@3
-    #  displayName: 'Stress Test'
-    #  inputs:
-    #    targetType: 'inline'
-    #    script: |
-    #      $(jmeter_path) -n -t automatedtesting/jmeter/"Stress Test.jmx" \
-    #                                 -l log/jmeter/stress-test.csv \
-    #                                 -e -f -o log/jmeter/Stress-Test-Report \
-    #                                 -j log/jmeter/jmeter.log
-    
-    #- task: ArchiveFiles@2
-    #  displayName: 'Archive Stress Test'
-    #  inputs:
-    #    rootFolderOrFile: '$(System.DefaultWorkingDirectory)/log/jmeter/Stress-Test-Report'
-    #    includeRootFolder: false
-    #    archiveType: 'zip'
-    #    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Stress-Test-Report.zip'
-    #- publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Stress-Test-Report.zip
-    #  displayName: 'Upload Stress Test Jmeter Logs'
-    #  artifact: drop-stressTestJmeterLogs
-    
-    #- task: Bash@3
-    #  displayName: 'Endurance Test'
-    #  inputs:
-    #    targetType: 'inline'
-    #    script: |
-    #      $(jmeter_path) -n -t automatedtesting/jmeter/"Endurance Test.jmx" \
-    #                                 -l log/jmeter/endurance-test.csv \
-    #                                 -e -f -o log/jmeter/Endurance-Test-Report \
-    #                                 -j log/jmeter/jmeter.log
-    
-    #- task: ArchiveFiles@2
-    #  displayName: 'Archive Endurance Test'
-    #  inputs:
-    #    rootFolderOrFile: '$(System.DefaultWorkingDirectory)/log/jmeter/Endurance-Test-Report'
-    #    includeRootFolder: false
-    #    archiveType: 'zip'
-    #    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Endurance-Test-Report.zip'
-    #- publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Endurance-Test-Report.zip
-    #  displayName: 'Upload Endurance Test Jmeter Logs'
-    #  artifact: drop-enduranceTestJmeterLogs
-
-#- stage:
-#  jobs:
-#  - deployment: FakeRestAPI
-#    pool:
-#      vmImage: 'ubuntu-latest'
-#    environment: 'TEST'
-#    strategy:
-#      runOnce:
-#       deploy:
-#          steps:
-#          - task: AzureWebApp@1
-#            displayName: 'Deploy Azure Web App'
-#            inputs:
-#              azureSubscription: 'azurerm-sc'
-#              appName: 'mynewwebapp-AppService'
-#              appType: webApp
-#              package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
-#  - deployment: VMDeploy
-#    displayName: VirtualMachine Deploy
-#    environment:
-#      name:  'TEST'
-#      resourceType: VirtualMachine
-#      tags: TAG NAME
-#    strategy:
-#      runOnce:
-#        deploy:
-#          steps:
-#          - task: Bash@3
-#            inputs:
-#              targetType: 'inline'
-#              script: |
-#                #! /bin/bash
-#                
-#                sudo apt-get upgrade -y
-#                sudo apt-get install python3-pip -y
-#                sudo apt-get install unzip -y
-#                sudo apt-get install -y chromium-browser
-#                pip3 install selenium
-#                export PATH=$PATH:some/path
 
 
