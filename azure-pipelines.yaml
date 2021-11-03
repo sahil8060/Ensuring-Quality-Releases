@@ -112,8 +112,8 @@ stages:
       inputs:
         targetType: 'inline'
         script: |
-          newman run automatedtesting/postman/Regression Test Suite.postman_collection.json \
-                                     -e automatedtesting/postman/Ensuring Quality Releases Env.postman_environment.json \
+          newman run automatedtesting/postman/Regression-Test-Suite.postman_collection.json \
+                                     -e automatedtesting/postman/Ensuring-Quality-Releases-Env.postman_environment.json \
                                      --suppress-exit-code \
                                      --reporters cli, junit \
                                      --reporter-junit-export log/newman/regression-test.xml
@@ -145,8 +145,8 @@ stages:
     #  inputs:
     #    targetType: 'inline'
     #    script: |
-    #      newman run automatedtesting/postman/Data Validation Test Suite.postman_collection.json \
-    #                                -e automatedtesting/postman/Ensuring Quality Releases Env.postman_environment.json \
+    #      newman run automatedtesting/postman/Data-Validation-Test-Suite.postman_collection.json \
+    #                                -e automatedtesting/postman/Ensuring-Quality-Releases-Env.postman_environment.json \
     #                                 --suppress-exit-code \
     #                                 --reporters cli, junit \
     #                                 --reporter-junit-export log/newman/data-validation-test.xml
