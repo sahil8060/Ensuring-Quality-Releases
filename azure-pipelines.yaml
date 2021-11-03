@@ -118,16 +118,28 @@ stages:
                                      --reporters cli, junit \
                                      --reporter-junit-export log/newman/regression-test.xml
 
-    - task: ArchiveFiles@2
-      displayName: 'Archive Regression Test Suite'
+    - task: PublishPipelineArtifact@1
+      displayName: 'Publish Regression Test Suite'
       inputs:
-        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/log/newman'
-        includeRootFolder: false
-        archiveType: 'zip'
-        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Regression-Test-Suite.zip'
-    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Regression-Test-Suite.zip
-      displayName: 'Upload Regression Test Suite'
-      artifact: drop-regressionTestSuite
+        targetPath: '$(Pipeline.Workspace)/log/newman'
+        artifact: 'drop-regressionTestSuite'
+        publishLocation: 'pipeline'
+    
+    - task: PublishTestResults@2
+      inputs:
+        testResultsFormat: 'JUnit'
+        testResultsFiles: 'regression-test.xml'
+        testRunTitle: 'Publish Regression Test Suite Results'
+    # - task: ArchiveFiles@2
+    #  displayName: 'Archive Regression Test Suite'
+    #  inputs:
+    #    rootFolderOrFile: '$(System.DefaultWorkingDirectory)/log/newman'
+    #    includeRootFolder: false
+    #    archiveType: 'zip'
+    #    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Regression-Test-Suite.zip'
+    #- publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Regression-Test-Suite.zip
+    #  displayName: 'Upload Regression Test Suite'
+    #  artifact: drop-regressionTestSuite
 
     - task: Bash@3
       displayName: 'Data Validation Test Suite'
@@ -140,16 +152,16 @@ stages:
                                      --reporters cli, junit \
                                      --reporter-junit-export log/newman/data-validation-test.xml
 
-    - task: ArchiveFiles@2
-      displayName: 'Archive Data Validation Test Suite'
-      inputs:
-        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/log/newman'
-        includeRootFolder: false
-        archiveType: 'zip'
-        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Data-Validation-Test-Suite.zip'
-    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Data-Validation-Test-Suite.zip
-      displayName: 'Upload Data Validation Test Suite'
-      artifact: drop-dataValidationTestSuite
+    #- task: ArchiveFiles@2
+    #  displayName: 'Archive Data Validation Test Suite'
+    #  inputs:
+    #    rootFolderOrFile: '$(System.DefaultWorkingDirectory)/log/newman'
+    #   includeRootFolder: false
+    #    archiveType: 'zip'
+    #    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Data-Validation-Test-Suite.zip'
+    #- publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Data-Validation-Test-Suite.zip
+    #  displayName: 'Upload Data Validation Test Suite'
+    #  artifact: drop-dataValidationTestSuite
 
     - task: Bash@3
       displayName: 'Stress Test'
