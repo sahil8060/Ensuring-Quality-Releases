@@ -17,7 +17,6 @@ stages:
         environment: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Ensuring Quality Releases Env.postman_environment.json'
         reporters: 'cli, junit'
         reporterJUnitExport: '$(System.DefaultWorkingDirectory)/log/newman/data-validation-test.xml'
-        targetType: 'inline'
         script: '/usr/local/bin/newman run --suppress-exit-code'
 
     - task: NewmanPostman@4
