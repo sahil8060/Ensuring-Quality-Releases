@@ -127,7 +127,7 @@ stages:
     - task: PublishTestResults@2
       inputs:
         testResultsFormat: 'JUnit'
-        testResultsFiles: '*.xml'
+        testResultsFiles: '$(System.DefaultWorkingDirectory)/log/newman/regression-test.xml'
         testRunTitle: 'Publish Regression Test Suite Results'
     # - task: ArchiveFiles@2
     #  displayName: 'Archive Regression Test Suite'
