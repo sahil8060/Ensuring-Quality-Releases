@@ -121,9 +121,8 @@ stages:
     - task: PublishPipelineArtifact@1
       displayName: 'Publish Regression Test Suite'
       inputs:
-        targetPath: '$(Pipeline.Workspace)/log/newman'
+        targetPath: '$(System.DefaultWorkingDirectory)/log/newman'
         artifact: 'drop-regressionTestSuite'
-        publishLocation: 'pipeline'
     
     - task: PublishTestResults@2
       inputs:
