@@ -83,7 +83,7 @@ stages:
     - task: NodeTool@0
       displayName: 'Install NodeTool'
       inputs:
-        versionSpec: '6.x'
+        versionSpec: '16.x'
         checkLatest: true
 
     - task: NewmanPostman@4
