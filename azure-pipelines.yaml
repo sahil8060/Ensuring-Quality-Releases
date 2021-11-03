@@ -114,20 +114,22 @@ stages:
         script: |
           newman run automatedtesting/postman/Regression-Test-Suite.postman_collection.json \
                                      -e automatedtesting/postman/Ensuring-Quality-Releases-Env.postman_environment.json \
-                                     --suppress-exit-code \
                                      --reporters cli, junit \
-                                     --reporter-junit-export log/newman/regression-test.xml
+                                     --reporter-junit-export log/newman/regression-test.xml \
+                                     --suppress-exit-code
 
-    - task: PublishPipelineArtifact@1
-      displayName: 'Publish Regression Test Suite'
-      inputs:
-        targetPath: '$(System.DefaultWorkingDirectory)/log/newman'
-        artifact: 'drop-regressionTestSuite'
+    #- task: PublishPipelineArtifact@1
+    #  displayName: 'Publish Regression Test Suite'
+    #  inputs:
+    #    targetPath: '$(System.DefaultWorkingDirectory)/log/newman'
+    #    artifact: 'drop-regressionTestSuite'
     
     - task: PublishTestResults@2
+      displayName: 'Publish Regression Test Suite Results'
       inputs:
         testResultsFormat: 'JUnit'
-        testResultsFiles: '$(System.DefaultWorkingDirectory)/log/newman/regression-test.xml'
+        searchFolder: '$(System.DefaultWorkingDirectory)/log/newman/'
+        testResultsFiles: 'regression-test.xml'
         testRunTitle: 'Publish Regression Test Suite Results'
     # - task: ArchiveFiles@2
     #  displayName: 'Archive Regression Test Suite'
