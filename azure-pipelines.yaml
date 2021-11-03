@@ -8,12 +8,6 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
-    
-    - task: Bash@3
-      displayName: 'Newman validation test'
-      inputs:
-        targetType: 'inline'
-        script: '/usr/local/bin/newman run --suppress-exit-code'
 
     - task: NewmanPostman@4
       displayName: 'Data Validation Test Suite'
@@ -23,6 +17,9 @@ stages:
         environment: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Ensuring Quality Releases Env.postman_environment.json'
         reporters: 'cli, junit'
         reporterJUnitExport: '$(System.DefaultWorkingDirectory)/log/newman/data-validation-test.xml'
+        targetType: 'inline'
+        script: '/usr/local/bin/newman run --suppress-exit-code'
+
     - task: NewmanPostman@4
       displayName: 'Regression Test Suite'
       inputs:
