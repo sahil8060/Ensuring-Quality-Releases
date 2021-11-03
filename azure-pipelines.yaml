@@ -8,7 +8,13 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
-    
+    - task: NewmanPostman@4
+      inputs:
+        collectionSourceType: 'file'
+        collectionFileSource: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Data Validation Test Suite.postman_collection.json'
+        environment: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Ensuring Quality Releases Env.postman_environment.json'
+        reporters: 'cli, junit'
+        reporterJUnitExport: 'log/newman/regression-test.xml'
     # Needed for Terraform VM deployment
     #- task: InstallSSHKey@0
     #  inputs:
