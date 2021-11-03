@@ -2,12 +2,12 @@ name: Azure Pipelines
 variables:
   python.version: '3.7.6'
 stages:
-#- stage: Build
-#  jobs:
-#  - job: Build
-#    pool:
-#      vmImage: 'ubuntu-latest'
-#    steps:
+- stage: Build
+  jobs:
+  - job: Build
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
 
     # Needed for Terraform VM deployment
     #- task: InstallSSHKey@0
@@ -123,70 +123,6 @@ stages:
     #- publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Endurance-Test-Report.zip
     #  displayName: 'Upload Endurance Test Jmeter Logs'
     #  artifact: drop-enduranceTestJmeterLogs
-
-- stage:
-  jobs:
-  - deployment: FakeRestAPI
-    pool:
-      vmImage: 'ubuntu-latest'
-    environment: 'TEST'
-    strategy:
-      runOnce:
-       deploy:
-          steps:
-          - task: AzureWebApp@1
-            displayName: 'Deploy Azure Web App'
-            inputs:
-              azureSubscription: 'azurerm-sc'
-              appName: 'mynewwebapp-AppService'
-              appType: webApp
-              package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
-  - deployment: VMDeploy
-    displayName: VirtualMachine Deploy
-    environment:
-      name:  'TEST'
-      resourceType: VirtualMachine
-      tags: TAG NAME
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: Bash@3
-            inputs:
-              targetType: 'inline'
-              script: |
-                #! /bin/bash
-                
-                sudo apt-get upgrade -y
-                sudo apt-get install python3-pip -y
-                sudo apt-get install unzip -y
-                sudo apt-get install -y chromium-browser
-                pip3 install selenium
-                export PATH=$PATH:some/path
-
-  - job: Postman
-    displayName: 'Postman Tests'
-    pool:
-      vmImage: 'ubuntu-latest'
-    steps:
-    #- task: NewmanPostman@4
-    #  displayName: 'Regression Test Suite'
-    #  inputs:
-    #    collectionSourceType: 'file'
-    #    collectionFileSource: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Regression-Test-Suite.postman_collection.json'
-    #    environment: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Ensuring-Quality-Releases-Env.postman_environment.json'
-    #    reporters: 'cli, junit'
-    #    reporterJUnitExport: '$(System.DefaultWorkingDirectory)/log/newman/regression-test.xml'
-
-    # - task: NewmanPostman@4
-    #  displayName: 'Data Validation Test Suite'
-    #  inputs:
-    #    collectionSourceType: 'file'
-    #    collectionFileSource: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Data-Validation-Test-Suite.postman_collection.json'
-    #    environment: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Ensuring-Quality-Releases-Env.postman_environment.json'
-    #    reporters: 'cli, junit'
-    #    reporterJUnitExport: '$(System.DefaultWorkingDirectory)/log/newman/data-validation-test.xml'
-
     - task: NodeTool@0
       displayName: 'Install NodeTool'
       inputs:
@@ -212,19 +148,19 @@ stages:
                                      --reporter-junit-export log/newman/regression-test.xml \
                                      --suppress-exit-code
 
-    #- task: PublishPipelineArtifact@1
-    #  displayName: 'Publish Regression Test Suite'
-    #  inputs:
-    #    targetPath: '$(System.DefaultWorkingDirectory)/log/newman'
-    #    artifact: 'drop-regressionTestSuite'
+    - task: PublishPipelineArtifact@1
+      displayName: 'Publish Regression Test Suite'
+      inputs:
+        targetPath: '$(System.DefaultWorkingDirectory)/log/newman'
+        artifact: 'drop-regressionTestSuite'
     
     - task: PublishTestResults@2
       displayName: 'Publish Regression Test Suite Results'
       inputs:
         testResultsFormat: 'JUnit'
-        searchFolder: '$(System.DefaultWorkingDirectory)/log/newman/'
-        testResultsFiles: 'regression-test.xml'
+        testResultsFiles: '$(System.DefaultWorkingDirectory)/log/newman/regression-test.xml'
         testRunTitle: 'Publish Regression Test Suite Results'
+    
     # - task: ArchiveFiles@2
     #  displayName: 'Archive Regression Test Suite'
     #  inputs:
@@ -236,17 +172,29 @@ stages:
     #  displayName: 'Upload Regression Test Suite'
     #  artifact: drop-regressionTestSuite
 
-    #- task: Bash@3
-    #  displayName: 'Data Validation Test Suite'
-    #  inputs:
-    #    targetType: 'inline'
-    #    script: |
-    #      newman run automatedtesting/postman/Data-Validation-Test-Suite.postman_collection.json \
-    #                                -e automatedtesting/postman/Ensuring-Quality-Releases-Env.postman_environment.json \
-    #                                 --suppress-exit-code \
-    #                                 --reporters cli, junit \
-    #                                 --reporter-junit-export log/newman/data-validation-test.xml
+    - task: Bash@3
+      displayName: 'Data Validation Test Suite'
+      inputs:
+        targetType: 'inline'
+        script: |
+          newman run automatedtesting/postman/Data-Validation-Test-Suite.postman_collection.json \
+                                    -e automatedtesting/postman/Ensuring-Quality-Releases-Env.postman_environment.json \
+                                     --suppress-exit-code \
+                                     --reporters cli,junit \
+                                     --reporter-junit-export log/newman/data-validation-test.xml
 
+    - task: PublishPipelineArtifact@1
+      displayName: 'Publish Data Validation Test Suite'
+      inputs:
+        targetPath: '$(System.DefaultWorkingDirectory)/log/newman'
+        artifact: 'drop-dataValidationTestSuite'
+    
+    - task: PublishTestResults@2
+      displayName: 'Publish Data Validation Test Suite Results'
+      inputs:
+        testResultsFormat: 'JUnit'
+        testResultsFiles: '$(System.DefaultWorkingDirectory)/log/newman/data-validation-test.xml'
+        testRunTitle: 'Publish Data Validation Test Suite Results'
     #- task: ArchiveFiles@2
     #  displayName: 'Archive Data Validation Test Suite'
     #  inputs:
@@ -258,4 +206,63 @@ stages:
     #  displayName: 'Upload Data Validation Test Suite'
     #  artifact: drop-dataValidationTestSuite
 
+    #- task: NewmanPostman@4
+    #  displayName: 'Regression Test Suite'
+    #  inputs:
+    #    collectionSourceType: 'file'
+    #    collectionFileSource: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Regression-Test-Suite.postman_collection.json'
+    #    environment: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Ensuring-Quality-Releases-Env.postman_environment.json'
+    #    reporters: 'cli, junit'
+    #    reporterJUnitExport: '$(System.DefaultWorkingDirectory)/log/newman/regression-test.xml'
+
+    # - task: NewmanPostman@4
+    #  displayName: 'Data Validation Test Suite'
+    #  inputs:
+    #    collectionSourceType: 'file'
+    #    collectionFileSource: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Data-Validation-Test-Suite.postman_collection.json'
+    #    environment: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Ensuring-Quality-Releases-Env.postman_environment.json'
+    #    reporters: 'cli, junit'
+    #    reporterJUnitExport: '$(System.DefaultWorkingDirectory)/log/newman/data-validation-test.xml'
+
+
+
+#- stage:
+#  jobs:
+#  - deployment: FakeRestAPI
+#    pool:
+#      vmImage: 'ubuntu-latest'
+#    environment: 'TEST'
+#    strategy:
+#      runOnce:
+#       deploy:
+#          steps:
+#          - task: AzureWebApp@1
+#            displayName: 'Deploy Azure Web App'
+#            inputs:
+#              azureSubscription: 'azurerm-sc'
+#              appName: 'mynewwebapp-AppService'
+#              appType: webApp
+#              package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
+#  - deployment: VMDeploy
+#    displayName: VirtualMachine Deploy
+#    environment:
+#      name:  'TEST'
+#      resourceType: VirtualMachine
+#      tags: TAG NAME
+#    strategy:
+#      runOnce:
+#        deploy:
+#          steps:
+#          - task: Bash@3
+#            inputs:
+#              targetType: 'inline'
+#              script: |
+#                #! /bin/bash
+#                
+#                sudo apt-get upgrade -y
+#                sudo apt-get install python3-pip -y
+#                sudo apt-get install unzip -y
+#                sudo apt-get install -y chromium-browser
+#                pip3 install selenium
+#                export PATH=$PATH:some/path
 
