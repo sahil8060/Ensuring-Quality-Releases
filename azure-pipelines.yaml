@@ -80,20 +80,15 @@ stages:
     #- task: JMeterInstaller@0
     #  inputs:
     #    jmeterVersion: '5.4.1'
-    - task: NodeTool@0
-      displayName: 'Install NodeTool'
-      inputs:
-        versionSpec: '16.x'
-        checkLatest: true
 
-    - task: NewmanPostman@4
-      displayName: 'Regression Test Suite'
-      inputs:
-        collectionSourceType: 'file'
-        collectionFileSource: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Regression-Test-Suite.postman_collection.json'
-        environment: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Ensuring-Quality-Releases-Env.postman_environment.json'
-        reporters: 'cli, junit'
-        reporterJUnitExport: '$(System.DefaultWorkingDirectory)/log/newman/regression-test.xml'
+    #- task: NewmanPostman@4
+    #  displayName: 'Regression Test Suite'
+    #  inputs:
+    #    collectionSourceType: 'file'
+    #    collectionFileSource: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Regression-Test-Suite.postman_collection.json'
+    #    environment: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Ensuring-Quality-Releases-Env.postman_environment.json'
+    #    reporters: 'cli, junit'
+    #    reporterJUnitExport: '$(System.DefaultWorkingDirectory)/log/newman/regression-test.xml'
 
     # - task: NewmanPostman@4
     #  displayName: 'Data Validation Test Suite'
@@ -104,25 +99,31 @@ stages:
     #    reporters: 'cli, junit'
     #    reporterJUnitExport: '$(System.DefaultWorkingDirectory)/log/newman/data-validation-test.xml'
 
-    #- task: Bash@3
-    #  displayName: 'Install Newman for Postman'
-    #  inputs:
-    #    targetType: 'inline'
-    #    script: |
-    #      npm install -g newman
-    #      npm install -g newman-reporter-junitfull
-    #      mkdir -p log/newman
+    - task: NodeTool@0
+      displayName: 'Install NodeTool'
+      inputs:
+        versionSpec: '16.x'
+        checkLatest: true
 
-    #- task: Bash@3
-    #  displayName: 'Regression Test Suite'
-    #  inputs:
-    #    targetType: 'inline'
-    #    script: |
-    #      newman run automatedtesting/postman/Regression-Test-Suite.postman_collection.json \
-    #                                 -e automatedtesting/postman/Ensuring-Quality-Releases-Env.postman_environment.json \
-    #                                 --reporters cli, junit \
-    #                                 --reporter-junitfull-export log/newman/regression-test.xml \
-    #                                 --suppress-exit-code
+    - task: Bash@3
+      displayName: 'Install Newman for Postman'
+      inputs:
+        targetType: 'inline'
+        script: |
+          npm install -g newman
+          npm install -g newman-reporter-junitfull
+          mkdir -p log/newman
+
+    - task: Bash@3
+      displayName: 'Regression Test Suite'
+      inputs:
+        targetType: 'inline'
+        script: |
+          newman run automatedtesting/postman/Regression-Test-Suite.postman_collection.json \
+                                     -e automatedtesting/postman/Ensuring-Quality-Releases-Env.postman_environment.json \
+                                     --reporters cli, junit \
+                                     --reporter-junitfull-export log/newman/regression-test.xml \
+                                     --suppress-exit-code
 
     #- task: PublishPipelineArtifact@1
     #  displayName: 'Publish Regression Test Suite'
