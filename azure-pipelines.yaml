@@ -18,7 +18,7 @@ stages:
         reporterJUnitExport: '$(System.DefaultWorkingDirectory)/log/newman/data-validation-test.xml'
     
     - task: NewmanPostman@4
-      displayName: 'Data Validation Test Suite'
+      displayName: 'Regression Test Suite'
       inputs:
         collectionSourceType: 'file'
         collectionFileSource: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Regression Test Suite.postman_collection.json'
