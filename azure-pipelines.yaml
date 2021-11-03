@@ -8,6 +8,13 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
+    
+    - task: Bash@3
+      displayName: 'Newman validation test'
+      inputs:
+        targetType: 'inline'
+        script: '/usr/local/bin/newman run --suppress-exit-code'
+
     - task: NewmanPostman@4
       displayName: 'Data Validation Test Suite'
       inputs:
