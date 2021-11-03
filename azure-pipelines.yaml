@@ -86,8 +86,8 @@ stages:
       displayName: 'Regression Test Suite'
       inputs:
         collectionSourceType: 'file'
-        collectionFileSource: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Regression Test Suite.postman_collection.json'
-        environment: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Ensuring Quality Releases Env.postman_environment.json'
+        collectionFileSource: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Regression-Test-Suite.postman_collection.json'
+        environment: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Ensuring-Quality-Releases-Env.postman_environment.json'
         reporters: 'cli, junit'
         reporterJUnitExport: '$(System.DefaultWorkingDirectory)/log/newman/regression-test.xml'
 
@@ -95,8 +95,8 @@ stages:
     #  displayName: 'Data Validation Test Suite'
     #  inputs:
     #    collectionSourceType: 'file'
-    #    collectionFileSource: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Data Validation Test Suite.postman_collection.json'
-    #    environment: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Ensuring Quality Releases Env.postman_environment.json'
+    #    collectionFileSource: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Data-Validation-Test-Suite.postman_collection.json'
+    #    environment: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Ensuring-Quality-Releases-Env.postman_environment.json'
     #    reporters: 'cli, junit'
     #    reporterJUnitExport: '$(System.DefaultWorkingDirectory)/log/newman/data-validation-test.xml'
 
