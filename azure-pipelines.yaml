@@ -199,7 +199,6 @@ stages:
         targetType: 'inline'
         script: |
           npm install -g newman
-          npm install -g newman-reporter-junitfull
           mkdir -p log/newman
 
     - task: Bash@3
@@ -209,8 +208,8 @@ stages:
         script: |
           newman run automatedtesting/postman/Regression-Test-Suite.postman_collection.json \
                                      -e automatedtesting/postman/Ensuring-Quality-Releases-Env.postman_environment.json \
-                                     --reporters cli, junit \
-                                     --reporter-junitfull-export log/newman/regression-test.xml \
+                                     --reporters cli,junit \
+                                     --reporter-junit-export log/newman/regression-test.xml \
                                      --suppress-exit-code
 
     #- task: PublishPipelineArtifact@1
