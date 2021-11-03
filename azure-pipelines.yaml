@@ -2,12 +2,12 @@ name: Azure Pipelines
 variables:
   python.version: '3.7.6'
 stages:
-- stage: Build
-  jobs:
-  - job: Build
-    pool:
-      vmImage: 'ubuntu-latest'
-    steps:
+#- stage: Build
+#  jobs:
+#  - job: Build
+#    pool:
+#      vmImage: 'ubuntu-latest'
+#    steps:
 
     # Needed for Terraform VM deployment
     #- task: InstallSSHKey@0
