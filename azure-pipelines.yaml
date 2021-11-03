@@ -116,7 +116,7 @@ stages:
           newman run automatedtesting/postman/Regression-Test-Suite.postman_collection.json \
                                      -e automatedtesting/postman/Ensuring-Quality-Releases-Env.postman_environment.json \
                                      --reporters cli, junit \
-                                     --reporter-junit-export log/newman/regression-test.xml \
+                                     --reporter-junitfull-export log/newman/regression-test.xml \
                                      --suppress-exit-code
 
     #- task: PublishPipelineArtifact@1
