@@ -80,7 +80,11 @@ stages:
     #- task: JMeterInstaller@0
     #  inputs:
     #    jmeterVersion: '5.4.1'
-    
+    - task: NodeTool@0
+      displayName: 'Install NodeTool'
+      inputs:
+        versionSpec: '6.x'
+        checkLatest: true
 
     - task: NewmanPostman@4
       displayName: 'Regression Test Suite'
