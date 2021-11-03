@@ -15,7 +15,8 @@ stages:
         collectionFileSource: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Data Validation Test Suite.postman_collection.json'
         environment: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Ensuring Quality Releases Env.postman_environment.json'
         reporters: 'cli, junit'
-        reporterJUnitExport: '$(System.DefaultWorkingDirectory)/log/newman/data-validation-test.xml'
+        reporterJUnitExport: '$(System.DefaultWorkingDirectory)/log/newman/data-validation-test.xml \
+        --suppress-exit-code'
     
     - task: NewmanPostman@4
       displayName: 'Regression Test Suite'
@@ -24,7 +25,8 @@ stages:
         collectionFileSource: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Regression Test Suite.postman_collection.json'
         environment: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Ensuring Quality Releases Env.postman_environment.json'
         reporters: 'cli, junit'
-        reporterJUnitExport: '$(System.DefaultWorkingDirectory)/log/newman/regression-test.xml'
+        reporterJUnitExport: '$(System.DefaultWorkingDirectory)/log/newman/regression-test.xml \
+        --suppress-exit-code'
     # Needed for Terraform VM deployment
     #- task: InstallSSHKey@0
     #  inputs:
