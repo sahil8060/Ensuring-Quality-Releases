@@ -108,7 +108,7 @@ stages:
           mkdir -p log/newman
 
     - task: Bash@3
-      displayName: 'Data Validation Test Suite'
+      displayName: 'Regression Test Suite'
       inputs:
         targetType: 'inline'
         script: |
@@ -117,7 +117,18 @@ stages:
                                      --suppress-exit-code \
                                      --reporters cli, junit \
                                      --reporter-junit-export log/newman/regression-test.xml
-    
+
+    - task: ArchiveFiles@2
+      displayName: 'Archive Regression Test Suite'
+      inputs:
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/log/newman'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Regression-Test-Suite.zip'
+    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Regression-Test-Suite.zip
+      displayName: 'Upload Regression Test Suite'
+      artifact: drop-regressionTestSuite
+
     - task: Bash@3
       displayName: 'Data Validation Test Suite'
       inputs:
@@ -128,6 +139,17 @@ stages:
                                      --suppress-exit-code \
                                      --reporters cli, junit \
                                      --reporter-junit-export log/newman/data-validation-test.xml
+
+    - task: ArchiveFiles@2
+      displayName: 'Archive Data Validation Test Suite'
+      inputs:
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/log/newman'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Data-Validation-Test-Suite.zip'
+    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Data-Validation-Test-Suite.zip
+      displayName: 'Upload Data Validation Test Suite'
+      artifact: drop-dataValidationTestSuite
 
     - task: Bash@3
       displayName: 'Stress Test'
