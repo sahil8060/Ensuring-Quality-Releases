@@ -129,15 +129,6 @@ stages:
         versionSpec: '16.x'
         checkLatest: true
 
-    - task: NewmanPostman@4
-      displayName: 'Regression Test Suite'
-      inputs:
-        collectionSourceType: 'file'
-        collectionFileSource: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Regression-Test-Suite.postman_collection.json'
-        environment: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Ensuring-Quality-Releases-Env.postman_environment.json'
-        reporters: 'cli,junit'
-        reporterJUnitExport: '$(System.DefaultWorkingDirectory)/log/newman/regression-test.xml'
-
     - task: Bash@3
       displayName: 'Install Newman for Postman'
       inputs:
@@ -215,6 +206,14 @@ stages:
     #  displayName: 'Upload Data Validation Test Suite'
     #  artifact: drop-dataValidationTestSuite
 
+    #- task: NewmanPostman@4
+    #  displayName: 'Regression Test Suite'
+    #  inputs:
+    #    collectionSourceType: 'file'
+    #   collectionFileSource: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Regression-Test-Suite.postman_collection.json'
+    #    environment: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Ensuring-Quality-Releases-Env.postman_environment.json'
+    #    reporters: 'cli,junit'
+    #    reporterJUnitExport: '$(System.DefaultWorkingDirectory)/log/newman/regression-test.xml'
     
     # - task: NewmanPostman@4
     #  displayName: 'Data Validation Test Suite'
