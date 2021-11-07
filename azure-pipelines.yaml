@@ -76,6 +76,19 @@ stages:
     #  displayName: 'Upload Package'
     #  artifact: drop-fakerestapi
     
+    
+    #- task: ArchiveFiles@2
+    #  displayName: 'Archive Selenium UI Test'
+    #  inputs:
+    #   rootFolderOrFile: '$(System.DefaultWorkingDirectory)/automatedtesting/selenium'
+    #    includeRootFolder: false
+    #    archiveType: 'zip'
+    #    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-selenium.zip'
+    #- publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-selenium.zip
+    #  displayName: 'Upload Package'
+    #  artifact: drop-Selenium
+
+
     # JMeter Installer
     #- task: JMeterInstaller@0
     #  inputs:
