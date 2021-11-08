@@ -87,7 +87,7 @@ stages:
        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-selenium.zip'
     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-selenium.zip
       displayName: 'Upload Package'
-      artifact: drop-Selenium
+      artifact: drop-selenium
 
 
     # # JMeter Installer
