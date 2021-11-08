@@ -297,18 +297,14 @@ stages:
                 sudo apt-get install -y chromium-chromedriver
                 python3 -m pip install --upgrade pip
                 pip3 install selenium
-                unzip -o $(Pipeline.Workspace)/drop-selenium/$(Build.BuildId)-selenium.zip
-                pwd
-                python3 login.py
                 export PATH=$PATH:some/path
           
-          # - task: Bash@3
-          #   inputs:
-          #     targetType: 'inline'
-          #     script: |
-          #       #! /bin/bash
-
-          #       unzip -o $(Pipeline.Workspace)/drop-selenium/$(Build.BuildId)-selenium.zip
-          #       pwd
-          #       pip3 install selenium
-          #       python3 login.py
+          - task: Bash@3
+            inputs:
+              targetType: 'inline'
+              script: |
+                #! /bin/bash
+                unzip -o $(Pipeline.Workspace)/drop-selenium/$(Build.BuildId)-selenium.zip
+                pwd
+                mkdir $(Pipeline.Workspace)/selenium-logs
+                python3 login.py | tee -a $(Pipeline.Workspace)/selenium-logs/selenium-logs.log
