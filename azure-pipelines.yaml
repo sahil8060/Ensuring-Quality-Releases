@@ -1,70 +1,70 @@
-# name: Azure Pipelines
-# variables:
-#   python.version: '3.7.6'
-# stages:
-# - stage: Build
-#   jobs:
-#   - job: Build
-#     pool:
-#       vmImage: 'ubuntu-latest'
-#     steps:
+name: Azure Pipelines
+variables:
+  python.version: '3.7.6'
+stages:
+- stage: Build
+  jobs:
+  - job: Build
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
 
-#     # Needed for Terraform VM deployment
-#     - task: InstallSSHKey@0
-#       inputs:
-#         knownHostsEntry: 'KNOWN_HOSTS_STRING'
-#         sshPublicKey: '$(PUBLIC_KEY)'
-#         sshKeySecureFile: 'id_rsa'
+    # Needed for Terraform VM deployment
+    - task: InstallSSHKey@0
+      inputs:
+        knownHostsEntry: 'KNOWN_HOSTS_STRING'
+        sshPublicKey: '$(PUBLIC_KEY)'
+        sshKeySecureFile: 'id_rsa'
     
-#     # Terraform Installer
-#     - task: TerraformInstaller@0
-#       inputs:
-#         terraformVersion: '0.12.3'
+    # Terraform Installer
+    - task: TerraformInstaller@0
+      inputs:
+        terraformVersion: '0.12.3'
     
-#     # Download Terraform tfvars file
-#     - task: DownloadSecureFile@1
-#       displayName: 'Terraform tfvars file'
-#       inputs:
-#         secureFile: 'terraform.tfvars'
+    # Download Terraform tfvars file
+    - task: DownloadSecureFile@1
+      displayName: 'Terraform tfvars file'
+      inputs:
+        secureFile: 'terraform.tfvars'
         
-#     # Copy Terraform tfvars file
-#     - task: Bash@3
-#       inputs:
-#        targetType: 'inline'
-#        script: 'cp $(Agent.TempDirectory)/terraform.tfvars $(System.DefaultWorkingDirectory)/terraform/environments/test'
+    # Copy Terraform tfvars file
+    - task: Bash@3
+      inputs:
+       targetType: 'inline'
+       script: 'cp $(Agent.TempDirectory)/terraform.tfvars $(System.DefaultWorkingDirectory)/terraform/environments/test'
     
-#     # Terraform Init
-#     - task: TerraformTaskV2@2
-#       displayName: 'Terraform Init'
-#       inputs:
-#         provider: 'azurerm'
-#         command: 'init'
-#         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
-#         backendServiceArm: 'azurerm-sc'
-#         backendAzureRmResourceGroupName: 'tfstate'
-#         backendAzureRmStorageAccountName: 'tfstate24194'
-#         backendAzureRmContainerName: 'tfstate'
-#         backendAzureRmKey: '$(access_key)'
-    
-
-#     # Terraform Apply
-#     - task: TerraformTaskV2@2
-#       displayName: 'Terraform Apply'
-#       inputs:
-#         provider: 'azurerm'
-#         command: 'apply'
-#         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
-#         environmentServiceNameAzureRM: 'azurerm-sc'
+    # Terraform Init
+    - task: TerraformTaskV2@2
+      displayName: 'Terraform Init'
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
+        backendServiceArm: 'azurerm-sc'
+        backendAzureRmResourceGroupName: 'tfstate'
+        backendAzureRmStorageAccountName: 'tfstate24194'
+        backendAzureRmContainerName: 'tfstate'
+        backendAzureRmKey: '$(access_key)'
     
 
-#     # Terraform Destroy
-#     - task: TerraformTaskV2@2
-#       displayName: 'Terraform Destroy'
-#       inputs:
-#         provider: 'azurerm'
-#         command: 'destroy'
-#         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
-#         environmentServiceNameAzureRM: 'azurerm-sc'
+    # Terraform Apply
+    - task: TerraformTaskV2@2
+      displayName: 'Terraform Apply'
+      inputs:
+        provider: 'azurerm'
+        command: 'apply'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
+        environmentServiceNameAzureRM: 'azurerm-sc'
+    
+
+    # Terraform Destroy
+    - task: TerraformTaskV2@2
+      displayName: 'Terraform Destroy'
+      inputs:
+        provider: 'azurerm'
+        command: 'destroy'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
+        environmentServiceNameAzureRM: 'azurerm-sc'
     
 #     - task: ArchiveFiles@2
 #       displayName: 'Archive FakeRestAPI'
