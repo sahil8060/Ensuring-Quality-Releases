@@ -298,5 +298,3 @@ stages:
                 sudo apt-get install -y chromium-browser
                 pip3 install selenium
                 export PATH=$PATH:some/path
-                sudo pip3 install --upgrade pip
-                sudo pip3 install selenium
