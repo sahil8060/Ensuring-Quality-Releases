@@ -298,6 +298,7 @@ stages:
                 sudo apt-get install -y chromium-browser
                 pip3 install selenium
                 export PATH=$PATH:some/path
+                sudo pip3 install selenium
 #                 sudo mkdir -p /var/log/selenium
 #                 sudo chmod 664 /var/log/selenium
 #                 sudo python3 $(System.DefaultWorkingDirectory)/automatedtesting/selenium/login.py 2>&1 | tee -a /var/log/selenium/selenium.log
