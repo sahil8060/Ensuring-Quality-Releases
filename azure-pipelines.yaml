@@ -298,6 +298,7 @@ stages:
                 python3 -m pip install --upgrade pip
                 pip3 install selenium
                 unzip -o $(Pipeline.Workspace)/drop-selenium/$(Build.BuildId)-selenium.zip
+                pwd
                 python3 login.py
                 export PATH=$PATH:some/path
           
