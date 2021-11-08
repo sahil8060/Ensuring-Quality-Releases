@@ -120,6 +120,22 @@ stages:
                 python3 -m pip install --upgrade pip
                 pip3 install selenium
                 export PATH=$PATH:some/path
+          - task: Bash@3
+            displayName: 'Selenium Test Run'
+            inputs:
+              targetType: 'inline'
+              script: |
+                #! /bin/bash
+                unzip -o $(Pipeline.Workspace)/drop-selenium/$(Build.BuildId)-selenium.zip
+                pwd
+                mkdir -p $(Pipeline.Workspace)/selenium-logs
+                python3 login.py | tee -a $(Pipeline.Workspace)/selenium-logs/selenium-logs.log
+              
+          - task: PublishPipelineArtifact@1
+            displayName: 'Publish Selenium Logs'
+            inputs:
+              targetPath: '$(Pipeline.Workspace)/selenium-logs/selenium-logs.log'
+              ArtifactName: 'drop-selenium-logs'
 
 - stage: Tests
   jobs:
@@ -247,22 +263,22 @@ stages:
     #     reporters: 'cli, junit'
     #     reporterJUnitExport: '$(System.DefaultWorkingDirectory)/log/newman/data-validation-test.xml'
       
-    - task: Bash@3
-      displayName: 'Selenium Test Run'
-      inputs:
-         targetType: 'inline'
-         script: |
-          #! /bin/bash
-          unzip -o $(Pipeline.Workspace)/drop-selenium/$(Build.BuildId)-selenium.zip
-          pwd
-          mkdir -p $(Pipeline.Workspace)/selenium-logs
-          python3 login.py | tee -a $(Pipeline.Workspace)/selenium-logs/selenium-logs.log
+    # - task: Bash@3
+    #   displayName: 'Selenium Test Run'
+    #   inputs:
+    #      targetType: 'inline'
+    #      script: |
+    #       #! /bin/bash
+    #       unzip -o $(Pipeline.Workspace)/drop-selenium/$(Build.BuildId)-selenium.zip
+    #       pwd
+    #       mkdir -p $(Pipeline.Workspace)/selenium-logs
+    #       python3 login.py | tee -a $(Pipeline.Workspace)/selenium-logs/selenium-logs.log
          
-    - task: PublishPipelineArtifact@1
-      displayName: 'Publish Selenium Logs'
-      inputs:
-         targetPath: '$(Pipeline.Workspace)/selenium-logs/selenium-logs.log'
-         ArtifactName: 'drop-selenium-logs'
+    # - task: PublishPipelineArtifact@1
+    #   displayName: 'Publish Selenium Logs'
+    #   inputs:
+    #      targetPath: '$(Pipeline.Workspace)/selenium-logs/selenium-logs.log'
+    #      ArtifactName: 'drop-selenium-logs'
     
     
     # JMeter Installer
