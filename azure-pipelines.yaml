@@ -308,3 +308,9 @@ stages:
                 pwd
                 mkdir -p $(Pipeline.Workspace)/selenium-logs
                 python3 login.py | tee -a $(Pipeline.Workspace)/selenium-logs/selenium-logs.log
+          
+          - task: PublishPipelineArtifact@1
+            displayName: 'Publish Selenium Logs'
+            inputs:
+              targetPath: '$(Pipeline.Workspace)/selenium-logs/selenium-logs.log'
+              ArtifactName: 'drop-selenium-logs'
