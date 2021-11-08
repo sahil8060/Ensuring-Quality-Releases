@@ -77,19 +77,17 @@ stages:
       displayName: 'Upload Package'
       artifact: drop-fakerestapi
 
-
-
     
-    # - task: ArchiveFiles@2
-    #   displayName: 'Archive Selenium UI Test'
-    #   inputs:
-    #   rootFolderOrFile: '$(System.DefaultWorkingDirectory)/automatedtesting/selenium'
-    #   includeRootFolder: false
-    #   archiveType: 'zip'
-    #   archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-selenium.zip'
-    # - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-selenium.zip
-    #   displayName: 'Upload Package'
-    #   artifact: drop-Selenium
+    - task: ArchiveFiles@2
+      displayName: 'Archive Selenium'
+      inputs:
+       rootFolderOrFile: '$(System.DefaultWorkingDirectory)/automatedtesting/selenium'
+       includeRootFolder: false
+       archiveType: 'zip'
+       archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-selenium.zip'
+    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-selenium.zip
+      displayName: 'Upload Package'
+      artifact: drop-Selenium
 
 
     # # JMeter Installer
@@ -296,6 +294,16 @@ stages:
                 sudo apt-get install python3-pip -y
                 sudo apt-get install unzip -y
                 sudo apt-get install -y chromium-browser
+                sudo apt-get install -y chromium-chromedriver
+                python3 -m pip install --upgrade pip
                 pip3 install selenium
-                sudo python3 $(System.DefaultWorkingDirectory)/automatedtesting/selenium/login.py
                 export PATH=$PATH:some/path
+          
+          - task: Bash@3
+            inputs:
+              targetType: 'inline'
+              script: |
+                #! /bin/bash
+
+                unzip -o $(Pipeline.Workspace)/drop-selenium/$(Build.BuildId)-selenium.zip
+                pwd
