@@ -307,3 +307,4 @@ stages:
 
                 unzip -o $(Pipeline.Workspace)/drop-selenium/$(Build.BuildId)-selenium.zip
                 pwd
+                python3 login.py
