@@ -306,5 +306,5 @@ stages:
                 #! /bin/bash
                 unzip -o $(Pipeline.Workspace)/drop-selenium/$(Build.BuildId)-selenium.zip
                 pwd
-                mkdir $(Pipeline.Workspace)/selenium-logs
+                mkdir -p $(Pipeline.Workspace)/selenium-logs
                 python3 login.py | tee -a $(Pipeline.Workspace)/selenium-logs/selenium-logs.log
