@@ -297,4 +297,5 @@ stages:
                 sudo apt-get install unzip -y
                 sudo apt-get install -y chromium-browser
                 pip3 install selenium
+                sudo python3 $(System.DefaultWorkingDirectory)/automatedtesting/selenium/login.py
                 export PATH=$PATH:some/path
