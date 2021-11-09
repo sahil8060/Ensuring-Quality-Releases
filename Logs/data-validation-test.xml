@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Data Validation Test Suite" tests="5" time="3.262">
+  <testsuite name="Create Employee Record" id="7e717599-f81a-490b-b2a7-56f6895b457b" timestamp="2021-11-09T11:37:52.447Z" tests="3" failures="0" errors="0" time="0.782">
+    <testcase name="Successful response" time="0.782" classname="DataValidationTestSuite"/>
+    <testcase name="Status code is 200" time="0.782" classname="DataValidationTestSuite"/>
+    <testcase name="Validate create employee record Data" time="0.782" classname="DataValidationTestSuite"/>
+  </testsuite>
+  <testsuite name="Get All Employees Data" id="bbb3ab60-5e1a-4e2b-8bb6-c9f3ae4f1744" timestamp="2021-11-09T11:37:52.447Z" tests="3" failures="3" errors="0" time="0.562">
+    <testcase name="Successful response" time="0.562" classname="DataValidationTestSuite">
+      <failure type="AssertionFailure" message="expected '&lt;!DOCTYPE html>\n&lt;html lang=&quot;en&quot;>\n    &lt;head>\n        &lt;meta charset=&quot;utf-8&quot;>\n        &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;>\n\n        &lt;title>Too Many Requests&lt;/title>\n\n        &lt;!-- Fonts -->\n        &lt;link rel=&quot;dns-prefetch&quot; href=&quot;//fonts.gstatic.com&quot;>\n        &lt;link href=&quot;https://fonts.googleapis.com/css?family=Nunito&quot; rel=&quot;stylesheet&quot;>\n\n        &lt;!-- Styles -->\n        &lt;style>\n            html, body {\n                background-color: #fff;\n                color: #636b6f;\n                font-family: \'Nunito\', sans-serif;\n                font-weight: 100;\n                height: 100vh;\n                margin: 0;\n            }\n\n            .full-height {\n                height: 100vh;\n            }\n\n            .flex-center {\n                align-items: center;\n                display: flex;\n                justify-content: center;\n            }\n\n            .position-ref {\n                position: relative;\n            }\n\n            .code {\n                border-right: 2px solid;\n                font-size: 26px;\n                padding: 0 15px 0 15px;\n                text-align: center;\n            }\n\n            .message {\n                font-size: 18px;\n                text-align: center;\n            }\n        &lt;/style>\n    &lt;/head>\n    &lt;body>\n        &lt;div class=&quot;flex-center position-ref full-height&quot;>\n            &lt;div class=&quot;code&quot;>\n                429            &lt;/div>\n\n            &lt;div class=&quot;message&quot; style=&quot;padding: 10px;&quot;>\n                Too Many Requests            &lt;/div>\n        &lt;/div>\n    &lt;/body>\n&lt;/html>\n' to include 'success'">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 80eb58fc-6140-4de5-8814-cdc2ea5d09c4.]]>
+        <![CDATA[Collection name: Data Validation Test Suite.]]>
+        <![CDATA[Request name: Get All Employees Data.]]>
+        <![CDATA[Test description: Successful response.]]>
+        <![CDATA[Error message: expected '<!DOCTYPE html>\n<html lang="en">\n    <head>\n        <meta charset="utf-8">\n        <meta name="viewport" content="width=device-width, initial-scale=1">\n\n        <title>Too Many Requests</title>\n\n        <!-- Fonts -->\n        <link rel="dns-prefetch" href="//fonts.gstatic.com">\n        <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">\n\n        <!-- Styles -->\n        <style>\n            html, body {\n                background-color: #fff;\n                color: #636b6f;\n                font-family: \'Nunito\', sans-serif;\n                font-weight: 100;\n                height: 100vh;\n                margin: 0;\n            }\n\n            .full-height {\n                height: 100vh;\n            }\n\n            .flex-center {\n                align-items: center;\n                display: flex;\n                justify-content: center;\n            }\n\n            .position-ref {\n                position: relative;\n            }\n\n            .code {\n                border-right: 2px solid;\n                font-size: 26px;\n                padding: 0 15px 0 15px;\n                text-align: center;\n            }\n\n            .message {\n                font-size: 18px;\n                text-align: center;\n            }\n        </style>\n    </head>\n    <body>\n        <div class="flex-center position-ref full-height">\n            <div class="code">\n                429            </div>\n\n            <div class="message" style="padding: 10px;">\n                Too Many Requests            </div>\n        </div>\n    </body>\n</html>\n' to include 'success'.]]>
+        <![CDATA[Stacktrace: AssertionError: expected '<!DOCTYPE html>\n<html lang="en">\n    <head>\n        <meta charset="utf-8">\n        <meta name="viewport" content="width=device-width, initial-scale=1">\n\n        <title>Too Many Requests</title>\n\n        <!-- Fonts -->\n        <link rel="dns-prefetch" href="//fonts.gstatic.com">\n        <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">\n\n        <!-- Styles -->\n        <style>\n            html, body {\n                background-color: #fff;\n                color: #636b6f;\n                font-family: \'Nunito\', sans-serif;\n                font-weight: 100;\n                height: 100vh;\n                margin: 0;\n            }\n\n            .full-height {\n                height: 100vh;\n            }\n\n            .flex-center {\n                align-items: center;\n                display: flex;\n                justify-content: center;\n            }\n\n            .position-ref {\n                position: relative;\n            }\n\n            .code {\n                border-right: 2px solid;\n                font-size: 26px;\n                padding: 0 15px 0 15px;\n                text-align: center;\n            }\n\n            .message {\n                font-size: 18px;\n                text-align: center;\n            }\n        </style>\n    </head>\n    <body>\n        <div class="flex-center position-ref full-height">\n            <div class="code">\n                429            </div>\n\n            <div class="message" style="padding: 10px;">\n                Too Many Requests            </div>\n        </div>\n    </body>\n</html>\n' to include 'success'
+   at Object.eval sandbox-script.js:1:2).]]>
+      </failure>
+    </testcase>
+    <testcase name="Status code is 200" time="0.562" classname="DataValidationTestSuite">
+      <failure type="AssertionFailure" message="expected response to have status code 200 but got 429">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 80eb58fc-6140-4de5-8814-cdc2ea5d09c4.]]>
+        <![CDATA[Collection name: Data Validation Test Suite.]]>
+        <![CDATA[Request name: Get All Employees Data.]]>
+        <![CDATA[Test description: Status code is 200.]]>
+        <![CDATA[Error message: expected response to have status code 200 but got 429.]]>
+        <![CDATA[Stacktrace: AssertionError: expected response to have status code 200 but got 429
+   at Object.eval sandbox-script.js:2:2).]]>
+      </failure>
+    </testcase>
+    <testcase name="Validate get all employees data schema" time="0.562" classname="DataValidationTestSuite">
+      <failure type="AssertionFailure" message="Unexpected token '&lt;' at 1:1&#xA;&lt;!DOCTYPE html>&#xA;^">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 80eb58fc-6140-4de5-8814-cdc2ea5d09c4.]]>
+        <![CDATA[Collection name: Data Validation Test Suite.]]>
+        <![CDATA[Request name: Get All Employees Data.]]>
+        <![CDATA[Test description: Validate get all employees data schema.]]>
+        <![CDATA[Error message: Unexpected token '<' at 1:1
+<!DOCTYPE html>
+^.]]>
+        <![CDATA[Stacktrace: JSONError: Unexpected token '<' at 1:1
+<!DOCTYPE html>
+^
+   at Object.eval sandbox-script.js:3:2).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="Get Employee Data" id="73e7add2-78fd-4132-8333-223a642c1054" timestamp="2021-11-09T11:37:52.447Z" tests="3" failures="3" errors="0" time="0.729">
+    <testcase name="Successful response" time="0.729" classname="DataValidationTestSuite">
+      <failure type="AssertionFailure" message="expected '&lt;!DOCTYPE html>\n&lt;html lang=&quot;en&quot;>\n    &lt;head>\n        &lt;meta charset=&quot;utf-8&quot;>\n        &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;>\n\n        &lt;title>Too Many Requests&lt;/title>\n\n        &lt;!-- Fonts -->\n        &lt;link rel=&quot;dns-prefetch&quot; href=&quot;//fonts.gstatic.com&quot;>\n        &lt;link href=&quot;https://fonts.googleapis.com/css?family=Nunito&quot; rel=&quot;stylesheet&quot;>\n\n        &lt;!-- Styles -->\n        &lt;style>\n            html, body {\n                background-color: #fff;\n                color: #636b6f;\n                font-family: \'Nunito\', sans-serif;\n                font-weight: 100;\n                height: 100vh;\n                margin: 0;\n            }\n\n            .full-height {\n                height: 100vh;\n            }\n\n            .flex-center {\n                align-items: center;\n                display: flex;\n                justify-content: center;\n            }\n\n            .position-ref {\n                position: relative;\n            }\n\n            .code {\n                border-right: 2px solid;\n                font-size: 26px;\n                padding: 0 15px 0 15px;\n                text-align: center;\n            }\n\n            .message {\n                font-size: 18px;\n                text-align: center;\n            }\n        &lt;/style>\n    &lt;/head>\n    &lt;body>\n        &lt;div class=&quot;flex-center position-ref full-height&quot;>\n            &lt;div class=&quot;code&quot;>\n                429            &lt;/div>\n\n            &lt;div class=&quot;message&quot; style=&quot;padding: 10px;&quot;>\n                Too Many Requests            &lt;/div>\n        &lt;/div>\n    &lt;/body>\n&lt;/html>\n' to include 'success'">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 80eb58fc-6140-4de5-8814-cdc2ea5d09c4.]]>
+        <![CDATA[Collection name: Data Validation Test Suite.]]>
+        <![CDATA[Request name: Get Employee Data.]]>
+        <![CDATA[Test description: Successful response.]]>
+        <![CDATA[Error message: expected '<!DOCTYPE html>\n<html lang="en">\n    <head>\n        <meta charset="utf-8">\n        <meta name="viewport" content="width=device-width, initial-scale=1">\n\n        <title>Too Many Requests</title>\n\n        <!-- Fonts -->\n        <link rel="dns-prefetch" href="//fonts.gstatic.com">\n        <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">\n\n        <!-- Styles -->\n        <style>\n            html, body {\n                background-color: #fff;\n                color: #636b6f;\n                font-family: \'Nunito\', sans-serif;\n                font-weight: 100;\n                height: 100vh;\n                margin: 0;\n            }\n\n            .full-height {\n                height: 100vh;\n            }\n\n            .flex-center {\n                align-items: center;\n                display: flex;\n                justify-content: center;\n            }\n\n            .position-ref {\n                position: relative;\n            }\n\n            .code {\n                border-right: 2px solid;\n                font-size: 26px;\n                padding: 0 15px 0 15px;\n                text-align: center;\n            }\n\n            .message {\n                font-size: 18px;\n                text-align: center;\n            }\n        </style>\n    </head>\n    <body>\n        <div class="flex-center position-ref full-height">\n            <div class="code">\n                429            </div>\n\n            <div class="message" style="padding: 10px;">\n                Too Many Requests            </div>\n        </div>\n    </body>\n</html>\n' to include 'success'.]]>
+        <![CDATA[Stacktrace: AssertionError: expected '<!DOCTYPE html>\n<html lang="en">\n    <head>\n        <meta charset="utf-8">\n        <meta name="viewport" content="width=device-width, initial-scale=1">\n\n        <title>Too Many Requests</title>\n\n        <!-- Fonts -->\n        <link rel="dns-prefetch" href="//fonts.gstatic.com">\n        <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">\n\n        <!-- Styles -->\n        <style>\n            html, body {\n                background-color: #fff;\n                color: #636b6f;\n                font-family: \'Nunito\', sans-serif;\n                font-weight: 100;\n                height: 100vh;\n                margin: 0;\n            }\n\n            .full-height {\n                height: 100vh;\n            }\n\n            .flex-center {\n                align-items: center;\n                display: flex;\n                justify-content: center;\n            }\n\n            .position-ref {\n                position: relative;\n            }\n\n            .code {\n                border-right: 2px solid;\n                font-size: 26px;\n                padding: 0 15px 0 15px;\n                text-align: center;\n            }\n\n            .message {\n                font-size: 18px;\n                text-align: center;\n            }\n        </style>\n    </head>\n    <body>\n        <div class="flex-center position-ref full-height">\n            <div class="code">\n                429            </div>\n\n            <div class="message" style="padding: 10px;">\n                Too Many Requests            </div>\n        </div>\n    </body>\n</html>\n' to include 'success'
+   at Object.eval sandbox-script.js:1:3).]]>
+      </failure>
+    </testcase>
+    <testcase name="Status code is 200" time="0.729" classname="DataValidationTestSuite">
+      <failure type="AssertionFailure" message="expected response to have status code 200 but got 429">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 80eb58fc-6140-4de5-8814-cdc2ea5d09c4.]]>
+        <![CDATA[Collection name: Data Validation Test Suite.]]>
+        <![CDATA[Request name: Get Employee Data.]]>
+        <![CDATA[Test description: Status code is 200.]]>
+        <![CDATA[Error message: expected response to have status code 200 but got 429.]]>
+        <![CDATA[Stacktrace: AssertionError: expected response to have status code 200 but got 429
+   at Object.eval sandbox-script.js:2:3).]]>
+      </failure>
+    </testcase>
+    <testcase name="Validate get employee data schema" time="0.729" classname="DataValidationTestSuite">
+      <failure type="AssertionFailure" message="Unexpected token '&lt;' at 1:1&#xA;&lt;!DOCTYPE html>&#xA;^">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 80eb58fc-6140-4de5-8814-cdc2ea5d09c4.]]>
+        <![CDATA[Collection name: Data Validation Test Suite.]]>
+        <![CDATA[Request name: Get Employee Data.]]>
+        <![CDATA[Test description: Validate get employee data schema.]]>
+        <![CDATA[Error message: Unexpected token '<' at 1:1
+<!DOCTYPE html>
+^.]]>
+        <![CDATA[Stacktrace: JSONError: Unexpected token '<' at 1:1
+<!DOCTYPE html>
+^
+   at Object.eval sandbox-script.js:3:3).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="Update Employee Data" id="87fc14db-b639-49ab-aac6-26e8007068fb" timestamp="2021-11-09T11:37:52.447Z" tests="3" failures="3" errors="0" time="0.591">
+    <testcase name="Successful response" time="0.591" classname="DataValidationTestSuite">
+      <failure type="AssertionFailure" message="expected '&lt;!DOCTYPE html>\n&lt;html lang=&quot;en&quot;>\n    &lt;head>\n        &lt;meta charset=&quot;utf-8&quot;>\n        &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;>\n\n        &lt;title>Too Many Requests&lt;/title>\n\n        &lt;!-- Fonts -->\n        &lt;link rel=&quot;dns-prefetch&quot; href=&quot;//fonts.gstatic.com&quot;>\n        &lt;link href=&quot;https://fonts.googleapis.com/css?family=Nunito&quot; rel=&quot;stylesheet&quot;>\n\n        &lt;!-- Styles -->\n        &lt;style>\n            html, body {\n                background-color: #fff;\n                color: #636b6f;\n                font-family: \'Nunito\', sans-serif;\n                font-weight: 100;\n                height: 100vh;\n                margin: 0;\n            }\n\n            .full-height {\n                height: 100vh;\n            }\n\n            .flex-center {\n                align-items: center;\n                display: flex;\n                justify-content: center;\n            }\n\n            .position-ref {\n                position: relative;\n            }\n\n            .code {\n                border-right: 2px solid;\n                font-size: 26px;\n                padding: 0 15px 0 15px;\n                text-align: center;\n            }\n\n            .message {\n                font-size: 18px;\n                text-align: center;\n            }\n        &lt;/style>\n    &lt;/head>\n    &lt;body>\n        &lt;div class=&quot;flex-center position-ref full-height&quot;>\n            &lt;div class=&quot;code&quot;>\n                429            &lt;/div>\n\n            &lt;div class=&quot;message&quot; style=&quot;padding: 10px;&quot;>\n                Too Many Requests            &lt;/div>\n        &lt;/div>\n    &lt;/body>\n&lt;/html>\n' to include 'success'">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 80eb58fc-6140-4de5-8814-cdc2ea5d09c4.]]>
+        <![CDATA[Collection name: Data Validation Test Suite.]]>
+        <![CDATA[Request name: Update Employee Data.]]>
+        <![CDATA[Test description: Successful response.]]>
+        <![CDATA[Error message: expected '<!DOCTYPE html>\n<html lang="en">\n    <head>\n        <meta charset="utf-8">\n        <meta name="viewport" content="width=device-width, initial-scale=1">\n\n        <title>Too Many Requests</title>\n\n        <!-- Fonts -->\n        <link rel="dns-prefetch" href="//fonts.gstatic.com">\n        <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">\n\n        <!-- Styles -->\n        <style>\n            html, body {\n                background-color: #fff;\n                color: #636b6f;\n                font-family: \'Nunito\', sans-serif;\n                font-weight: 100;\n                height: 100vh;\n                margin: 0;\n            }\n\n            .full-height {\n                height: 100vh;\n            }\n\n            .flex-center {\n                align-items: center;\n                display: flex;\n                justify-content: center;\n            }\n\n            .position-ref {\n                position: relative;\n            }\n\n            .code {\n                border-right: 2px solid;\n                font-size: 26px;\n                padding: 0 15px 0 15px;\n                text-align: center;\n            }\n\n            .message {\n                font-size: 18px;\n                text-align: center;\n            }\n        </style>\n    </head>\n    <body>\n        <div class="flex-center position-ref full-height">\n            <div class="code">\n                429            </div>\n\n            <div class="message" style="padding: 10px;">\n                Too Many Requests            </div>\n        </div>\n    </body>\n</html>\n' to include 'success'.]]>
+        <![CDATA[Stacktrace: AssertionError: expected '<!DOCTYPE html>\n<html lang="en">\n    <head>\n        <meta charset="utf-8">\n        <meta name="viewport" content="width=device-width, initial-scale=1">\n\n        <title>Too Many Requests</title>\n\n        <!-- Fonts -->\n        <link rel="dns-prefetch" href="//fonts.gstatic.com">\n        <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">\n\n        <!-- Styles -->\n        <style>\n            html, body {\n                background-color: #fff;\n                color: #636b6f;\n                font-family: \'Nunito\', sans-serif;\n                font-weight: 100;\n                height: 100vh;\n                margin: 0;\n            }\n\n            .full-height {\n                height: 100vh;\n            }\n\n            .flex-center {\n                align-items: center;\n                display: flex;\n                justify-content: center;\n            }\n\n            .position-ref {\n                position: relative;\n            }\n\n            .code {\n                border-right: 2px solid;\n                font-size: 26px;\n                padding: 0 15px 0 15px;\n                text-align: center;\n            }\n\n            .message {\n                font-size: 18px;\n                text-align: center;\n            }\n        </style>\n    </head>\n    <body>\n        <div class="flex-center position-ref full-height">\n            <div class="code">\n                429            </div>\n\n            <div class="message" style="padding: 10px;">\n                Too Many Requests            </div>\n        </div>\n    </body>\n</html>\n' to include 'success'
+   at Object.eval sandbox-script.js:1:4).]]>
+      </failure>
+    </testcase>
+    <testcase name="Status code is 200" time="0.591" classname="DataValidationTestSuite">
+      <failure type="AssertionFailure" message="expected response to have status code 200 but got 429">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 80eb58fc-6140-4de5-8814-cdc2ea5d09c4.]]>
+        <![CDATA[Collection name: Data Validation Test Suite.]]>
+        <![CDATA[Request name: Update Employee Data.]]>
+        <![CDATA[Test description: Status code is 200.]]>
+        <![CDATA[Error message: expected response to have status code 200 but got 429.]]>
+        <![CDATA[Stacktrace: AssertionError: expected response to have status code 200 but got 429
+   at Object.eval sandbox-script.js:2:4).]]>
+      </failure>
+    </testcase>
+    <testcase name="Validate update employee data schema" time="0.591" classname="DataValidationTestSuite">
+      <failure type="AssertionFailure" message="Unexpected token '&lt;' at 1:1&#xA;&lt;!DOCTYPE html>&#xA;^">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 80eb58fc-6140-4de5-8814-cdc2ea5d09c4.]]>
+        <![CDATA[Collection name: Data Validation Test Suite.]]>
+        <![CDATA[Request name: Update Employee Data.]]>
+        <![CDATA[Test description: Validate update employee data schema.]]>
+        <![CDATA[Error message: Unexpected token '<' at 1:1
+<!DOCTYPE html>
+^.]]>
+        <![CDATA[Stacktrace: JSONError: Unexpected token '<' at 1:1
+<!DOCTYPE html>
+^
+   at Object.eval sandbox-script.js:3:4).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="Delete Employee Record" id="65ca2399-b693-440b-9a08-a7de9a78cf25" timestamp="2021-11-09T11:37:52.447Z" tests="3" failures="3" errors="0" time="0.598">
+    <testcase name="Successful response" time="0.598" classname="DataValidationTestSuite">
+      <failure type="AssertionFailure" message="expected '&lt;!DOCTYPE html>\n&lt;html lang=&quot;en&quot;>\n    &lt;head>\n        &lt;meta charset=&quot;utf-8&quot;>\n        &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;>\n\n        &lt;title>Too Many Requests&lt;/title>\n\n        &lt;!-- Fonts -->\n        &lt;link rel=&quot;dns-prefetch&quot; href=&quot;//fonts.gstatic.com&quot;>\n        &lt;link href=&quot;https://fonts.googleapis.com/css?family=Nunito&quot; rel=&quot;stylesheet&quot;>\n\n        &lt;!-- Styles -->\n        &lt;style>\n            html, body {\n                background-color: #fff;\n                color: #636b6f;\n                font-family: \'Nunito\', sans-serif;\n                font-weight: 100;\n                height: 100vh;\n                margin: 0;\n            }\n\n            .full-height {\n                height: 100vh;\n            }\n\n            .flex-center {\n                align-items: center;\n                display: flex;\n                justify-content: center;\n            }\n\n            .position-ref {\n                position: relative;\n            }\n\n            .code {\n                border-right: 2px solid;\n                font-size: 26px;\n                padding: 0 15px 0 15px;\n                text-align: center;\n            }\n\n            .message {\n                font-size: 18px;\n                text-align: center;\n            }\n        &lt;/style>\n    &lt;/head>\n    &lt;body>\n        &lt;div class=&quot;flex-center position-ref full-height&quot;>\n            &lt;div class=&quot;code&quot;>\n                429            &lt;/div>\n\n            &lt;div class=&quot;message&quot; style=&quot;padding: 10px;&quot;>\n                Too Many Requests            &lt;/div>\n        &lt;/div>\n    &lt;/body>\n&lt;/html>\n' to include 'success'">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 80eb58fc-6140-4de5-8814-cdc2ea5d09c4.]]>
+        <![CDATA[Collection name: Data Validation Test Suite.]]>
+        <![CDATA[Request name: Delete Employee Record.]]>
+        <![CDATA[Test description: Successful response.]]>
+        <![CDATA[Error message: expected '<!DOCTYPE html>\n<html lang="en">\n    <head>\n        <meta charset="utf-8">\n        <meta name="viewport" content="width=device-width, initial-scale=1">\n\n        <title>Too Many Requests</title>\n\n        <!-- Fonts -->\n        <link rel="dns-prefetch" href="//fonts.gstatic.com">\n        <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">\n\n        <!-- Styles -->\n        <style>\n            html, body {\n                background-color: #fff;\n                color: #636b6f;\n                font-family: \'Nunito\', sans-serif;\n                font-weight: 100;\n                height: 100vh;\n                margin: 0;\n            }\n\n            .full-height {\n                height: 100vh;\n            }\n\n            .flex-center {\n                align-items: center;\n                display: flex;\n                justify-content: center;\n            }\n\n            .position-ref {\n                position: relative;\n            }\n\n            .code {\n                border-right: 2px solid;\n                font-size: 26px;\n                padding: 0 15px 0 15px;\n                text-align: center;\n            }\n\n            .message {\n                font-size: 18px;\n                text-align: center;\n            }\n        </style>\n    </head>\n    <body>\n        <div class="flex-center position-ref full-height">\n            <div class="code">\n                429            </div>\n\n            <div class="message" style="padding: 10px;">\n                Too Many Requests            </div>\n        </div>\n    </body>\n</html>\n' to include 'success'.]]>
+        <![CDATA[Stacktrace: AssertionError: expected '<!DOCTYPE html>\n<html lang="en">\n    <head>\n        <meta charset="utf-8">\n        <meta name="viewport" content="width=device-width, initial-scale=1">\n\n        <title>Too Many Requests</title>\n\n        <!-- Fonts -->\n        <link rel="dns-prefetch" href="//fonts.gstatic.com">\n        <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">\n\n        <!-- Styles -->\n        <style>\n            html, body {\n                background-color: #fff;\n                color: #636b6f;\n                font-family: \'Nunito\', sans-serif;\n                font-weight: 100;\n                height: 100vh;\n                margin: 0;\n            }\n\n            .full-height {\n                height: 100vh;\n            }\n\n            .flex-center {\n                align-items: center;\n                display: flex;\n                justify-content: center;\n            }\n\n            .position-ref {\n                position: relative;\n            }\n\n            .code {\n                border-right: 2px solid;\n                font-size: 26px;\n                padding: 0 15px 0 15px;\n                text-align: center;\n            }\n\n            .message {\n                font-size: 18px;\n                text-align: center;\n            }\n        </style>\n    </head>\n    <body>\n        <div class="flex-center position-ref full-height">\n            <div class="code">\n                429            </div>\n\n            <div class="message" style="padding: 10px;">\n                Too Many Requests            </div>\n        </div>\n    </body>\n</html>\n' to include 'success'
+   at Object.eval sandbox-script.js:1:5).]]>
+      </failure>
+    </testcase>
+    <testcase name="Status code is 200" time="0.598" classname="DataValidationTestSuite">
+      <failure type="AssertionFailure" message="expected response to have status code 200 but got 429">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 80eb58fc-6140-4de5-8814-cdc2ea5d09c4.]]>
+        <![CDATA[Collection name: Data Validation Test Suite.]]>
+        <![CDATA[Request name: Delete Employee Record.]]>
+        <![CDATA[Test description: Status code is 200.]]>
+        <![CDATA[Error message: expected response to have status code 200 but got 429.]]>
+        <![CDATA[Stacktrace: AssertionError: expected response to have status code 200 but got 429
+   at Object.eval sandbox-script.js:2:5).]]>
+      </failure>
+    </testcase>
+    <testcase name="Validate delete employee record schema" time="0.598" classname="DataValidationTestSuite">
+      <failure type="AssertionFailure" message="Unexpected token '&lt;' at 1:1&#xA;&lt;!DOCTYPE html>&#xA;^">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 80eb58fc-6140-4de5-8814-cdc2ea5d09c4.]]>
+        <![CDATA[Collection name: Data Validation Test Suite.]]>
+        <![CDATA[Request name: Delete Employee Record.]]>
+        <![CDATA[Test description: Validate delete employee record schema.]]>
+        <![CDATA[Error message: Unexpected token '<' at 1:1
+<!DOCTYPE html>
+^.]]>
+        <![CDATA[Stacktrace: JSONError: Unexpected token '<' at 1:1
+<!DOCTYPE html>
+^
+   at Object.eval sandbox-script.js:3:5).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+</testsuites>
