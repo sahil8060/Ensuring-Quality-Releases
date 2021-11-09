@@ -80,153 +80,153 @@ stages:
       displayName: 'Upload Package'
       artifact: drop-selenium
 
-- stage: Deploy
-  jobs:
-  - deployment: FakeRestAPI
-    pool:
-      vmImage: 'ubuntu-latest'
-    environment: 'TEST'
-    strategy:
-      runOnce:
-       deploy:
-          steps:
-          - task: AzureWebApp@1
-            displayName: 'Deploy Azure Web App'
-            inputs:
-              azureSubscription: 'azurerm-sc'
-              appName: 'mynewwebapp-AppService'
-              appType: webApp
-              package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
-  - deployment: VMDeploy
-    displayName: VirtualMachine Deploy
-    environment:
-      name:  'TEST'
-      resourceType: VirtualMachine
-      tags: TAG NAME
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: Bash@3
-            inputs:
-              targetType: 'inline'
-              script: |
-                #! /bin/bash
+# - stage: Deploy
+#   jobs:
+#   - deployment: FakeRestAPI
+#     pool:
+#       vmImage: 'ubuntu-latest'
+#     environment: 'TEST'
+#     strategy:
+#       runOnce:
+#        deploy:
+#           steps:
+#           - task: AzureWebApp@1
+#             displayName: 'Deploy Azure Web App'
+#             inputs:
+#               azureSubscription: 'azurerm-sc'
+#               appName: 'mynewwebapp-AppService'
+#               appType: webApp
+#               package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
+#   - deployment: VMDeploy
+#     displayName: VirtualMachine Deploy
+#     environment:
+#       name:  'TEST'
+#       resourceType: VirtualMachine
+#       tags: TAG NAME
+#     strategy:
+#       runOnce:
+#         deploy:
+#           steps:
+#           - task: Bash@3
+#             inputs:
+#               targetType: 'inline'
+#               script: |
+#                 #! /bin/bash
                 
-                sudo apt-get upgrade -y
-                sudo apt-get install python3-pip -y
-                sudo apt-get install unzip -y
-                sudo apt-get install -y chromium-browser
-                sudo apt-get install -y chromium-chromedriver
-                python3 -m pip install --upgrade pip
-                pip3 install selenium
-                export PATH=$PATH:some/path
-          - task: Bash@3
-            displayName: 'Selenium Test Run'
-            inputs:
-              targetType: 'inline'
-              script: |
-                #! /bin/bash
-                unzip -o $(Pipeline.Workspace)/drop-selenium/$(Build.BuildId)-selenium.zip
-                pwd
-                mkdir -p $(Pipeline.Workspace)/selenium-logs
-                python3 login.py | tee -a $(Pipeline.Workspace)/selenium-logs/selenium-logs.log
+#                 sudo apt-get upgrade -y
+#                 sudo apt-get install python3-pip -y
+#                 sudo apt-get install unzip -y
+#                 sudo apt-get install -y chromium-browser
+#                 sudo apt-get install -y chromium-chromedriver
+#                 python3 -m pip install --upgrade pip
+#                 pip3 install selenium
+#                 export PATH=$PATH:some/path
+#           - task: Bash@3
+#             displayName: 'Selenium Test Run'
+#             inputs:
+#               targetType: 'inline'
+#               script: |
+#                 #! /bin/bash
+#                 unzip -o $(Pipeline.Workspace)/drop-selenium/$(Build.BuildId)-selenium.zip
+#                 pwd
+#                 mkdir -p $(Pipeline.Workspace)/selenium-logs
+#                 python3 login.py | tee -a $(Pipeline.Workspace)/selenium-logs/selenium-logs.log
               
-          - task: PublishPipelineArtifact@1
-            displayName: 'Publish Selenium Logs'
-            inputs:
-              targetPath: '$(Pipeline.Workspace)/selenium-logs/selenium-logs.log'
-              ArtifactName: 'drop-selenium-logs'
+#           - task: PublishPipelineArtifact@1
+#             displayName: 'Publish Selenium Logs'
+#             inputs:
+#               targetPath: '$(Pipeline.Workspace)/selenium-logs/selenium-logs.log'
+#               ArtifactName: 'drop-selenium-logs'
 
-- stage: Tests
-  jobs:
-  - job: Tests
-    pool:
-      vmImage: 'ubuntu-latest'
-    steps:
+# - stage: Tests
+#   jobs:
+#   - job: Tests
+#     pool:
+#       vmImage: 'ubuntu-latest'
+#     steps:
       
-    - task: NodeTool@0
-      displayName: 'Install NodeTool'
-      inputs:
-        versionSpec: '16.x'
-        checkLatest: true
+#     - task: NodeTool@0
+#       displayName: 'Install NodeTool'
+#       inputs:
+#         versionSpec: '16.x'
+#         checkLatest: true
 
-    - task: Bash@3
-      displayName: 'Install Newman for Postman'
-      inputs:
-        targetType: 'inline'
-        script: |
-          npm install -g newman
-          mkdir -p log/newman
+#     - task: Bash@3
+#       displayName: 'Install Newman for Postman'
+#       inputs:
+#         targetType: 'inline'
+#         script: |
+#           npm install -g newman
+#           mkdir -p log/newman
 
-    - task: Bash@3
-      displayName: 'Regression Test Suite'
-      inputs:
-        targetType: 'inline'
-        script: |
-          newman run automatedtesting/postman/Regression-Test-Suite.postman_collection.json \
-                                     -e automatedtesting/postman/Ensuring-Quality-Releases-Env.postman_environment.json \
-                                     --reporters cli,junit \
-                                     --reporter-junit-export log/newman/regression-test.xml \
-                                     --suppress-exit-code
+#     - task: Bash@3
+#       displayName: 'Regression Test Suite'
+#       inputs:
+#         targetType: 'inline'
+#         script: |
+#           newman run automatedtesting/postman/Regression-Test-Suite.postman_collection.json \
+#                                      -e automatedtesting/postman/Ensuring-Quality-Releases-Env.postman_environment.json \
+#                                      --reporters cli,junit \
+#                                      --reporter-junit-export log/newman/regression-test.xml \
+#                                      --suppress-exit-code
 
-    - task: PublishPipelineArtifact@1
-      displayName: 'Publish Regression Test Suite'
-      inputs:
-        targetPath: '$(System.DefaultWorkingDirectory)/log/newman'
-        artifact: 'drop-regressionTestSuite'
+#     - task: PublishPipelineArtifact@1
+#       displayName: 'Publish Regression Test Suite'
+#       inputs:
+#         targetPath: '$(System.DefaultWorkingDirectory)/log/newman'
+#         artifact: 'drop-regressionTestSuite'
     
-    - task: PublishTestResults@2
-      displayName: 'Publish Regression Test Suite Results'
-      inputs:
-        testResultsFormat: 'JUnit'
-        testResultsFiles: '$(System.DefaultWorkingDirectory)/log/newman/regression-test.xml'
-        testRunTitle: 'Publish Regression Test Suite Results'
+#     - task: PublishTestResults@2
+#       displayName: 'Publish Regression Test Suite Results'
+#       inputs:
+#         testResultsFormat: 'JUnit'
+#         testResultsFiles: '$(System.DefaultWorkingDirectory)/log/newman/regression-test.xml'
+#         testRunTitle: 'Publish Regression Test Suite Results'
 
 
 
 
 
 
-    # - task: ArchiveFiles@2
-    #   displayName: 'Archive Regression Test Suite'
-    #   inputs:
-    #     rootFolderOrFile: '$(System.DefaultWorkingDirectory)/log/newman'
-    #     includeRootFolder: false
-    #     archiveType: 'zip'
-    #     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Regression-Test-Suite.zip'
-    # - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Regression-Test-Suite.zip
-    #   displayName: 'Upload Regression Test Suite'
-    #   artifact: drop-regressionTestSuite
+#     # - task: ArchiveFiles@2
+#     #   displayName: 'Archive Regression Test Suite'
+#     #   inputs:
+#     #     rootFolderOrFile: '$(System.DefaultWorkingDirectory)/log/newman'
+#     #     includeRootFolder: false
+#     #     archiveType: 'zip'
+#     #     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Regression-Test-Suite.zip'
+#     # - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Regression-Test-Suite.zip
+#     #   displayName: 'Upload Regression Test Suite'
+#     #   artifact: drop-regressionTestSuite
 
 
 
 
 
 
-    - task: Bash@3
-      displayName: 'Data Validation Test Suite'
-      inputs:
-        targetType: 'inline'
-        script: |
-          newman run automatedtesting/postman/Data-Validation-Test-Suite.postman_collection.json \
-                                    -e automatedtesting/postman/Ensuring-Quality-Releases-Env.postman_environment.json \
-                                     --suppress-exit-code \
-                                     --reporters cli,junit \
-                                     --reporter-junit-export log/newman/data-validation-test.xml
+#     - task: Bash@3
+#       displayName: 'Data Validation Test Suite'
+#       inputs:
+#         targetType: 'inline'
+#         script: |
+#           newman run automatedtesting/postman/Data-Validation-Test-Suite.postman_collection.json \
+#                                     -e automatedtesting/postman/Ensuring-Quality-Releases-Env.postman_environment.json \
+#                                      --suppress-exit-code \
+#                                      --reporters cli,junit \
+#                                      --reporter-junit-export log/newman/data-validation-test.xml
 
-    - task: PublishPipelineArtifact@1
-      displayName: 'Publish Data Validation Test Suite'
-      inputs:
-        targetPath: '$(System.DefaultWorkingDirectory)/log/newman'
-        artifact: 'drop-dataValidationTestSuite'
+#     - task: PublishPipelineArtifact@1
+#       displayName: 'Publish Data Validation Test Suite'
+#       inputs:
+#         targetPath: '$(System.DefaultWorkingDirectory)/log/newman'
+#         artifact: 'drop-dataValidationTestSuite'
     
-    - task: PublishTestResults@2
-      displayName: 'Publish Data Validation Test Suite Results'
-      inputs:
-        testResultsFormat: 'JUnit'
-        testResultsFiles: '$(System.DefaultWorkingDirectory)/log/newman/data-validation-test.xml'
-        testRunTitle: 'Publish Data Validation Test Suite Results'
+#     - task: PublishTestResults@2
+#       displayName: 'Publish Data Validation Test Suite Results'
+#       inputs:
+#         testResultsFormat: 'JUnit'
+#         testResultsFiles: '$(System.DefaultWorkingDirectory)/log/newman/data-validation-test.xml'
+#         testRunTitle: 'Publish Data Validation Test Suite Results'
 
 
 
@@ -234,100 +234,100 @@ stages:
 
 
 
-    # - task: ArchiveFiles@2
-    #   displayName: 'Archive Data Validation Test Suite'
-    #   inputs:
-    #    rootFolderOrFile: '$(System.DefaultWorkingDirectory)/log/newman'
-    #    includeRootFolder: false
-    #    archiveType: 'zip'
-    #    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Data-Validation-Test-Suite.zip'
-    # - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Data-Validation-Test-Suite.zip
-    #   displayName: 'Upload Data Validation Test Suite'
-    #   artifact: drop-dataValidationTestSuite
+#     # - task: ArchiveFiles@2
+#     #   displayName: 'Archive Data Validation Test Suite'
+#     #   inputs:
+#     #    rootFolderOrFile: '$(System.DefaultWorkingDirectory)/log/newman'
+#     #    includeRootFolder: false
+#     #    archiveType: 'zip'
+#     #    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Data-Validation-Test-Suite.zip'
+#     # - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Data-Validation-Test-Suite.zip
+#     #   displayName: 'Upload Data Validation Test Suite'
+#     #   artifact: drop-dataValidationTestSuite
 
 
-    # - task: NewmanPostman@4
-    #   displayName: 'Regression Test Suite'
-    #   inputs:
-    #    collectionSourceType: 'file'
-    #    collectionFileSource: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Regression-Test-Suite.postman_collection.json'
-    #    environment: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Ensuring-Quality-Releases-Env.postman_environment.json'
-    #    reporters: 'cli,junit'
-    #    reporterJUnitExport: '$(System.DefaultWorkingDirectory)/log/newman/regression-test.xml'
+#     # - task: NewmanPostman@4
+#     #   displayName: 'Regression Test Suite'
+#     #   inputs:
+#     #    collectionSourceType: 'file'
+#     #    collectionFileSource: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Regression-Test-Suite.postman_collection.json'
+#     #    environment: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Ensuring-Quality-Releases-Env.postman_environment.json'
+#     #    reporters: 'cli,junit'
+#     #    reporterJUnitExport: '$(System.DefaultWorkingDirectory)/log/newman/regression-test.xml'
     
-    # - task: NewmanPostman@4
-    #   displayName: 'Data Validation Test Suite'
-    #   inputs:
-    #     collectionSourceType: 'file'
-    #     collectionFileSource: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Data-Validation-Test-Suite.postman_collection.json'
-    #     environment: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Ensuring-Quality-Releases-Env.postman_environment.json'
-    #     reporters: 'cli, junit'
-    #     reporterJUnitExport: '$(System.DefaultWorkingDirectory)/log/newman/data-validation-test.xml'
+#     # - task: NewmanPostman@4
+#     #   displayName: 'Data Validation Test Suite'
+#     #   inputs:
+#     #     collectionSourceType: 'file'
+#     #     collectionFileSource: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Data-Validation-Test-Suite.postman_collection.json'
+#     #     environment: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/Ensuring-Quality-Releases-Env.postman_environment.json'
+#     #     reporters: 'cli, junit'
+#     #     reporterJUnitExport: '$(System.DefaultWorkingDirectory)/log/newman/data-validation-test.xml'
       
-    # - task: Bash@3
-    #   displayName: 'Selenium Test Run'
-    #   inputs:
-    #      targetType: 'inline'
-    #      script: |
-    #       #! /bin/bash
-    #       unzip -o $(Pipeline.Workspace)/drop-selenium/$(Build.BuildId)-selenium.zip
-    #       pwd
-    #       mkdir -p $(Pipeline.Workspace)/selenium-logs
-    #       python3 login.py | tee -a $(Pipeline.Workspace)/selenium-logs/selenium-logs.log
+#     # - task: Bash@3
+#     #   displayName: 'Selenium Test Run'
+#     #   inputs:
+#     #      targetType: 'inline'
+#     #      script: |
+#     #       #! /bin/bash
+#     #       unzip -o $(Pipeline.Workspace)/drop-selenium/$(Build.BuildId)-selenium.zip
+#     #       pwd
+#     #       mkdir -p $(Pipeline.Workspace)/selenium-logs
+#     #       python3 login.py | tee -a $(Pipeline.Workspace)/selenium-logs/selenium-logs.log
          
-    # - task: PublishPipelineArtifact@1
-    #   displayName: 'Publish Selenium Logs'
-    #   inputs:
-    #      targetPath: '$(Pipeline.Workspace)/selenium-logs/selenium-logs.log'
-    #      ArtifactName: 'drop-selenium-logs'
+#     # - task: PublishPipelineArtifact@1
+#     #   displayName: 'Publish Selenium Logs'
+#     #   inputs:
+#     #      targetPath: '$(Pipeline.Workspace)/selenium-logs/selenium-logs.log'
+#     #      ArtifactName: 'drop-selenium-logs'
     
     
-    # JMeter Installer
-    - task: JMeterInstaller@0
-      inputs:
-        jmeterVersion: '5.4.1'
+#     # JMeter Installer
+#     - task: JMeterInstaller@0
+#       inputs:
+#         jmeterVersion: '5.4.1'
 
-    - task: Bash@3
-      displayName: 'Stress Test'
-      inputs:
-        targetType: 'inline'
-        script: |
-          $(jmeter_path) -n -t automatedtesting/jmeter/"Stress Test.jmx" \
-                                     -l log/jmeter/stress-test.csv \
-                                     -e -f -o log/jmeter/Stress-Test-Report \
-                                     -j log/jmeter/jmeter.log
+#     - task: Bash@3
+#       displayName: 'Stress Test'
+#       inputs:
+#         targetType: 'inline'
+#         script: |
+#           $(jmeter_path) -n -t automatedtesting/jmeter/"Stress Test.jmx" \
+#                                      -l log/jmeter/stress-test.csv \
+#                                      -e -f -o log/jmeter/Stress-Test-Report \
+#                                      -j log/jmeter/jmeter.log
     
-    - task: ArchiveFiles@2
-      displayName: 'Archive Stress Test'
-      inputs:
-        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/log/jmeter/Stress-Test-Report'
-        includeRootFolder: false
-        archiveType: 'zip'
-        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Stress-Test-Report.zip'
-    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Stress-Test-Report.zip
-      displayName: 'Upload Stress Test Jmeter Logs'
-      artifact: drop-stressTestJmeterLogs
+#     - task: ArchiveFiles@2
+#       displayName: 'Archive Stress Test'
+#       inputs:
+#         rootFolderOrFile: '$(System.DefaultWorkingDirectory)/log/jmeter/Stress-Test-Report'
+#         includeRootFolder: false
+#         archiveType: 'zip'
+#         archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Stress-Test-Report.zip'
+#     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Stress-Test-Report.zip
+#       displayName: 'Upload Stress Test Jmeter Logs'
+#       artifact: drop-stressTestJmeterLogs
     
-    - task: Bash@3
-      displayName: 'Endurance Test'
-      inputs:
-        targetType: 'inline'
-        script: |
-          $(jmeter_path) -n -t automatedtesting/jmeter/"Endurance Test.jmx" \
-                                     -l log/jmeter/endurance-test.csv \
-                                     -e -f -o log/jmeter/Endurance-Test-Report \
-                                     -j log/jmeter/jmeter.log
+#     - task: Bash@3
+#       displayName: 'Endurance Test'
+#       inputs:
+#         targetType: 'inline'
+#         script: |
+#           $(jmeter_path) -n -t automatedtesting/jmeter/"Endurance Test.jmx" \
+#                                      -l log/jmeter/endurance-test.csv \
+#                                      -e -f -o log/jmeter/Endurance-Test-Report \
+#                                      -j log/jmeter/jmeter.log
     
-    - task: ArchiveFiles@2
-      displayName: 'Archive Endurance Test'
-      inputs:
-        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/log/jmeter/Endurance-Test-Report'
-        includeRootFolder: false
-        archiveType: 'zip'
-        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Endurance-Test-Report.zip'
-    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Endurance-Test-Report.zip
-      displayName: 'Upload Endurance Test Jmeter Logs'
-      artifact: drop-enduranceTestJmeterLogs
+#     - task: ArchiveFiles@2
+#       displayName: 'Archive Endurance Test'
+#       inputs:
+#         rootFolderOrFile: '$(System.DefaultWorkingDirectory)/log/jmeter/Endurance-Test-Report'
+#         includeRootFolder: false
+#         archiveType: 'zip'
+#         archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Endurance-Test-Report.zip'
+#     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Endurance-Test-Report.zip
+#       displayName: 'Upload Endurance Test Jmeter Logs'
+#       artifact: drop-enduranceTestJmeterLogs
 
 # - stage: Destroy
 #   jobs:
