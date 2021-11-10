@@ -131,7 +131,7 @@ stages:
                 unzip -o $(Pipeline.Workspace)/drop-selenium/$(Build.BuildId)-selenium.zip
                 pwd
                 mkdir -p $(Pipeline.Workspace)/selenium-logs
-                python3 login.py | tee -a $(Pipeline.Workspace)/selenium-logs/selenium-logs.log | tee -a $(System.DefaultWorkingDirectory)/automatedtesting/selenium/selenium-logs.log
+                python3 login.py | tee -a $(Pipeline.Workspace)/selenium-logs/selenium-logs.log
               
           - task: PublishPipelineArtifact@1
             displayName: 'Publish Selenium Logs'
