@@ -293,6 +293,7 @@ stages:
       inputs:
         targetType: 'inline'
         script: |
+          echo "Stress Test for https://mynewwebapp-appservice.azurewebsites.net/"
           $(jmeter_path) -n -t automatedtesting/jmeter/"Stress Test.jmx" \
                                      -l log/jmeter/stress-test.csv \
                                      -e -f -o log/jmeter/Stress-Test-Report \
@@ -314,6 +315,7 @@ stages:
       inputs:
         targetType: 'inline'
         script: |
+          echo "Endurance Test for https://mynewwebapp-appservice.azurewebsites.net/"
           $(jmeter_path) -n -t automatedtesting/jmeter/"Endurance Test.jmx" \
                                      -l log/jmeter/endurance-test.csv \
                                      -e -f -o log/jmeter/Endurance-Test-Report \
