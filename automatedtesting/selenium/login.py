@@ -18,9 +18,10 @@ def login(user, password):
     options.add_argument("--headless")
     driver = webdriver.Chrome(options=options)
     #driver = webdriver.Chrome()
-    print(str(ct) + ' Browser started successfully.\
-            Navigating to the demo page to login.')
+    print(str(ct) + ' Browser started successfully.')
+    print(str(ct) + ' Navigating to the demo page to login.')
     driver.get('https://www.saucedemo.com/')
+    print(str(ct) + ' Visited https://www.saucedemo.com/')
     driver.find_element(By.XPATH, "//input[@id='user-name']").send_keys(user)
     print(str(ct) + ' User Name successfully entered')
     driver.find_element(By.XPATH, "//input[@id=\
