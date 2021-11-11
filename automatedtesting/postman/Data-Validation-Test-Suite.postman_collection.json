@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "0987c65d-5fec-4977-b8b4-914bc4dbc6c6",
+		"_postman_id": "8edbb0af-780b-47d4-932e-c67d1cd1dfa1",
 		"name": "Data Validation Test Suite",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -97,7 +97,6 @@
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
 							"});",
-							"",
 							"// reference source https://sqa.stackexchange.com/questions/37963/how-to-verify-response-body-as-a-test-in-postman",
 							"",
 							"pm.test(\"Validate create users record Data\", function () {",
@@ -141,7 +140,7 @@
 							"});",
 							"// reference source https://sqa.stackexchange.com/questions/37963/how-to-verify-response-body-as-a-test-in-postman",
 							"",
-							"pm.test(\"Check UserName\", function () {",
+							"pm.test(\"Validate Update users record Data\", function () {",
 							"    var jsonData = pm.response.json();",
 							"    pm.expect(jsonData.ID).to.equal(0);",
 							"    pm.expect(jsonData.UserName).to.equal(\"Sahil\");",
