@@ -1,22 +1,20 @@
 {
 	"info": {
-		"_postman_id": "597804e9-52bd-4093-bd18-f563c50d8424",
+		"_postman_id": "9ddc9a9f-8192-497a-9cfa-256f2677f477",
 		"name": "Regression Test Suite",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Create Employee Record",
+			"name": "Create User Record",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Successful response\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"success\");",
-							"});",
-							"var json = pm.response.json();",
-							"pm.environment.set(\"id\", json.data.id);"
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -27,7 +25,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"{{name}}\",\n    \"salary\": \"{{salary}}\",\n    \"age\": \"{{age}}\"\n}",
+					"raw": "{\n    \"UserName\": \"{{name}}\",\n    \"Password\": \"{{Password}}\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -35,30 +33,28 @@
 					}
 				},
 				"url": {
-					"raw": "{{azureappurl}}/api/{{version}}/create",
+					"raw": "{{azureappurl}}/api/Users",
 					"host": [
 						"{{azureappurl}}"
 					],
 					"path": [
 						"api",
-						"{{version}}",
-						"create"
+						"Users"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Get All Employees Data",
+			"name": "Get All Users Data",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Successful response\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"success\");",
-							"});",
-							""
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -68,30 +64,28 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{azureappurl}}/api/{{version}}/employees",
+					"raw": "{{azureappurl}}/api/Users",
 					"host": [
 						"{{azureappurl}}"
 					],
 					"path": [
 						"api",
-						"{{version}}",
-						"employees"
+						"Users"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Get Employee Data",
+			"name": "Get User Data",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Successful response\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"success\");",
-							"});",
-							""
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -101,14 +95,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{azureappurl}}/api/{{version}}/employee/{{id}}",
+					"raw": "{{azureappurl}}/api/Users/{{id}}",
 					"host": [
 						"{{azureappurl}}"
 					],
 					"path": [
 						"api",
-						"{{version}}",
-						"employee",
+						"Users",
 						"{{id}}"
 					]
 				}
@@ -116,16 +109,15 @@
 			"response": []
 		},
 		{
-			"name": "Update Employee Data",
+			"name": "Update User Data",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Successful response\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"success\");",
-							"});",
-							""
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -136,7 +128,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"{{name}}\",\n    \"salary\": \"{{salary}}\",\n    \"age\": \"{{age}}\"\n}",
+					"raw": "{\n    \"UserName\": \"{{name}}\",\n    \"Password\": \"{{Password}}\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -144,14 +136,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{azureappurl}}/api/{{version}}/update/{{id}}",
+					"raw": "{{azureappurl}}/api/Users/{{id}}",
 					"host": [
 						"{{azureappurl}}"
 					],
 					"path": [
 						"api",
-						"{{version}}",
-						"update",
+						"Users",
 						"{{id}}"
 					]
 				}
@@ -159,16 +150,15 @@
 			"response": []
 		},
 		{
-			"name": "Delete Employee Record",
+			"name": "Delete User Record",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Successful response\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"success\");",
-							"});",
-							""
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -178,14 +168,13 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{azureappurl}}/api/{{version}}/delete/{{id}}",
+					"raw": "{{azureappurl}}/api/Users/{{id}}",
 					"host": [
 						"{{azureappurl}}"
 					],
 					"path": [
 						"api",
-						"{{version}}",
-						"delete",
+						"Users",
 						"{{id}}"
 					]
 				}
