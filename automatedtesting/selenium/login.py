@@ -31,7 +31,7 @@ def login(user, password):
     print(str(ct) + " I\'m " + str(user) + " able to successfully Login")
 
     assert "https://www.saucedemo.com/inventory.html" in driver.current_url
-    print(str(ct) + ' Great Work! You are on the right track\n')
+    print(str(ct) + ' Great Work! You are on the right track')
 
     print(str(ct) + ' Now You can add the products to the cart')
 
